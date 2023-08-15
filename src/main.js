@@ -4,8 +4,14 @@ import './registerServiceWorker'
 import router from './router'
 import store from './store'
 
-Vue.config.productionTip = false
+import ElementUI from 'element-ui';
+// import 'element-ui/lib/theme-chalk/index.css';
 
+import './assets/scss/standard.scss';
+import './assets/style/standard.scss';
+import './assets/iconFont/iconFontGlob.scss';
+Vue.config.productionTip = false
+Vue.use(ElementUI)
 new Vue({
   router,
   store,

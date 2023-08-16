@@ -7,7 +7,9 @@
         <el-row class="design-area">
             <v-aside style="text-align: center;"></v-aside>
             <v-browse></v-browse>
-            <div><v-offside></v-offside></div>
+            <div class="H100">
+              <v-offside></v-offside>
+              </div>
         </el-row>
     </el-row>
 

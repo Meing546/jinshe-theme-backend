@@ -1,8 +1,8 @@
 <template>
-    <div>
+    <div class="H100">
         <div class="header">公告栏</div>
-        <div class="operation-container ">
-            <div class="pl24 pr24 ">
+        <div class="operation-container">
+            <!-- <div class="pl24 pr24 H100"> -->
                 <div class="fw600 fs16 flex mb10">公告栏</div>
                 <div class="mb16">
                     <el-checkbox-group v-model="group.exhibit">
@@ -115,7 +115,7 @@
                     </el-select>
                 </div>
             </div>
-        </div>
+        <!-- </div> -->
     </div>
 </template>
 <script>
@@ -174,9 +174,25 @@ export default {
 }
 .operation-container {
   background: rgb(255, 255, 255);
-  padding: 12px 0px 1px;
+  padding: 20px;
+  box-sizing: border-box;
   overflow: hidden auto;
-  height: calc(100vh - 72px);
+  height: calc(100% - 72px);
+
+  &::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+  &::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.4);
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+  }
 }
 .ranger-container {
   display: flex;

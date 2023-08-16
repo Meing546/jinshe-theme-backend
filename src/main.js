@@ -10,6 +10,20 @@ import ElementUI from 'element-ui';
 import './assets/scss/standard.scss';
 import './assets/style/standard.scss';
 import './assets/iconFont/iconFontGlob.scss';
+
+
+// 引入富文本编辑器
+import VueQuillEditor from 'vue-quill-editor'
+// 富文本编辑器对应的样式
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
+
+// 注册富文本编辑器组件为全局组件
+Vue.use(VueQuillEditor)
+
+
+
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 new Vue({

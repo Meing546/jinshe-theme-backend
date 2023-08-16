@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "29923325",
+      "name": "rcd-drag",
+      "font_class": "rcd-drag",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    },
+    {
       "icon_id": "11372711",
       "name": "图片",
       "font_class": "tupian",

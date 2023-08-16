@@ -2,8 +2,6 @@
 <template >
     <el-row class="design-box-left">
         <div>
-            <!-- 123123131223
-            <span class="iconfont">&#xe8ba;</span> -->
         </div>
         <el-row class="HaMi">
             <div v-for="(item,index) in menu"
@@ -23,7 +21,6 @@
                     <!--设置标题  -->
                     <div v-if="menu_id == 2"
                          class="gcEPdA borB">全局设置</div>
-                    <!-- 装修 -->
                     <div v-for="(item,index) in sub_menu_temp[menu_id]"
                          :key="index"
                          @click="cut({id:item.id,index},2)"
@@ -31,16 +28,29 @@
                         <div class="relative"
                              :class="menu_id != 1?'borB product-template':'resource_item'">
                             <!-- 前缀 -->
+                            <span v-if="item.prefix"
+                                  class="iconfont ml25 mr8"
+                                  style="color:#CCD0D7">&#xe60e;</span>
                             <!-- 图标 -->
-                            <span class="pl45 "></span>
+                            <span class=" pr16"
+                                  :class="{'pl20':(menu_id!=0),'pl45':(menu_id==0&&!item.prefix)}"
+                                  v-if="item.iconfont">
+                                <span class="iconfont fs24">{{item.iconfont}}</span>
+                            </span>
+                            <!-- 图片 -->
+                            <el-image v-if="item.icon"
+                                      :src="sub_menu_id!=item.id?item.icon:item.highlight_icon"
+                                      class="w20 pl14 pr14"
+                                      style="padding-top: 17%;"></el-image>
                             <span class="section-name">
                                 {{ item.title }}
                             </span>
+                            <!-- 后缀:眼睛 -->
                             <i class="view-btn el-icon-view"
                                v-if="menu_id==0 && item.isShow"></i>
+                            <!-- 选中边框 -->
                             <div class="active_bar"
                                  v-if="menu_id==1 && sub_menu_id == item.id">
-
                             </div>
 
                         </div>
@@ -57,7 +67,7 @@
                              :key="index+'_'+_inx"
                              style="margin: 16px 0;">
                             <el-image :src="_item.img"
-                                      class="W100"></el-image>
+                                      class="W100 hand"></el-image>
                         </div>
                     </div>
 
@@ -99,9 +109,27 @@ export default {
       ],
       sub_menu_temp: [
         [
-          { id: "001", title: "公告栏", isShow: true },
-          { id: "002", title: "导航", isShow: false },
-          { id: "003", title: "单个商品", isShow: true },
+          {
+            id: "001",
+            title: "公告栏",
+            isShow: true,
+            prefix: false,
+            iconfont: "\ue7ab",
+          },
+          {
+            id: "002",
+            title: "导航",
+            isShow: false,
+            prefix: false,
+            iconfont: "\ue85a",
+          },
+          {
+            id: "003",
+            title: "单个商品",
+            isShow: true,
+            prefix: true,
+            iconfont: "\ue603",
+          },
         ],
         [
           {
@@ -128,14 +156,29 @@ export default {
                 ],
               },
             ],
+            icon: "https://intl-image.yzcdn.cn/images/i18n-b/store/img/product.png",
+            highlight_icon:
+              "https://intl-image.yzcdn.cn/images/i18n-b/store/img/product_active.png",
           },
-          { id: "102", title: "图片" },
-          { id: "103", title: "文本" },
+          {
+            id: "102",
+            title: "图片",
+            icon: "https://intl-image.yzcdn.cn/images/i18n-b/store/img/picture.png",
+            highlight_icon:
+              "https://intl-image.yzcdn.cn/images/i18n-b/store/img/picture_active.png",
+          },
+          {
+            id: "103",
+            title: "文本",
+            icon: "https://intl-image.yzcdn.cn/images/i18n-b/store/img/text.png",
+            highlight_icon:
+              "https://intl-image.yzcdn.cn/images/i18n-b/store/img/text_active.png",
+          },
         ],
         [
-          { id: "201", title: "颜色" },
-          { id: "202", title: "字体" },
-          { id: "203", title: "圆角" },
+          { id: "201", title: "颜色", iconfont: "\ue678" },
+          { id: "202", title: "字体", iconfont: "\ue60c" },
+          { id: "203", title: "圆角", iconfont: "\ue672" },
         ],
       ],
     };
@@ -145,12 +188,13 @@ export default {
     cut(data, type) {
       if (type == 1) {
         this.menu_id = data == this.menu_id ? -1 : data;
-        if (data == 1 && this.sub_menu_id == -1)
+        if (data == 1) {
           this.sub_menu_id = this.sub_menu_temp[1][0].id;
+          this.sub_menu_index = 0;
+        }
       } else if (type == 2) {
         this.sub_menu_id = data.id;
         this.sub_menu_index = this.sub_menu_id == -1 ? 0 : data.index;
-        console.log(this.sub_menu_temp[this.menu_id][this.sub_menu_index]);
       }
     },
   },
@@ -215,7 +259,7 @@ export default {
       background: #fff;
       overflow-y: auto;
       width: 280px;
-      height: 100%;
+      height: 100vh;
       overflow: auto;
     }
     .section-select-category {

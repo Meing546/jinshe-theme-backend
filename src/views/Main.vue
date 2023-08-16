@@ -5,10 +5,9 @@
             <v-header></v-header>
         </el-row>
         <el-row class="design-area">
-            <el-row>
-                <v-aside></v-aside>
-            </el-row>
-            <el-row>123</el-row>
+            <v-aside style="text-align: center;"></v-aside>
+            <v-browse></v-browse>
+            <div><v-offside></v-offside></div>
         </el-row>
     </el-row>
 
@@ -16,10 +15,14 @@
 <script>
 import Header from "./Header.vue";
 import Aside from "./Aside.vue";
+import Browse from "./Browse.vue";
+import Offside from "./Offside.vue";
 export default {
   components: {
     "v-header": Header,
     "v-aside": Aside,
+    "v-offside": Offside,
+    "v-browse": Browse,
   },
   data() {
     return {};
@@ -27,7 +30,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-
 .mainCss {
   margin: 0px;
   padding: 0px;
@@ -45,5 +47,4 @@ export default {
   overflow: hidden;
   position: relative;
 }
-
 </style>

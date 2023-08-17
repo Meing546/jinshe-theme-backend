@@ -115,6 +115,21 @@ export default {
             isShow: true,
             prefix: false,
             iconfont: "\ue7ab",
+            assembly: "PageNotice",
+            content: {
+              id: "123",
+              exhibit: [1,2], //仅主页、固定顶部显示
+              text: "<p>Mid-year limited time offer</p>", //文本
+              fontSize: 12, //文字大小
+              constColor: "#000000", //文本颜色
+              link: "", //点击文本
+              iconColor: "#000000", //图标颜色
+              exhibitMedia: [1,2], //媒体展示
+              phone: "022-0123-2345", //联系电话
+              bgColor: "#fff6f7", //背景色
+              bgLucency: "", //背景透明度
+              width: "full", //公告栏宽度}
+            },
           },
           {
             id: "002",
@@ -183,7 +198,9 @@ export default {
       ],
     };
   },
-  mounted() {},
+  mounted() {
+    this.$emit("pageArr", this.sub_menu_temp[0]);
+  },
   methods: {
     cut(data, type) {
       if (type == 1) {
@@ -195,6 +212,10 @@ export default {
       } else if (type == 2) {
         this.sub_menu_id = data.id;
         this.sub_menu_index = this.sub_menu_id == -1 ? 0 : data.index;
+        if (this.menu_id == 0) {
+          this.menu_id = -1;
+          this.$bus.$emit("selectAssembly", this.sub_menu_temp[0][data.index]);
+        }
       }
     },
   },

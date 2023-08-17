@@ -21,11 +21,9 @@ import 'quill/dist/quill.bubble.css'
 
 // 注册富文本编辑器组件为全局组件
 Vue.use(VueQuillEditor)
-
-
-
-Vue.config.productionTip = false
 Vue.use(ElementUI)
+Vue.config.productionTip = false
+Vue.prototype.$bus = new Vue();
 new Vue({
   router,
   store,

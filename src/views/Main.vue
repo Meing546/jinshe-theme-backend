@@ -5,11 +5,13 @@
             <v-header></v-header>
         </el-row>
         <el-row class="design-area">
-            <v-aside style="text-align: center;"></v-aside>
-            <v-browse></v-browse>
-            <div class="H100">
-              <v-offside></v-offside>
-              </div>
+            <v-aside style="text-align: center;"
+                     @pageArr="getPageArr"></v-aside>
+            <v-browse ref="myBrowse"></v-browse>
+
+            <v-offside ref="myOffside"
+                       @callPage="callPage"></v-offside>
+
         </el-row>
     </el-row>
 
@@ -28,6 +30,16 @@ export default {
   },
   data() {
     return {};
+  },
+  methods: {
+    getPageArr(res) {
+      this.$refs.myBrowse.getPageArr(res);
+      this.$refs.myOffside.getPageArr(res);
+    },
+    callPage(res) {
+      console.info("获取到-=-",res)
+      this.$refs.myBrowse.callPage(res);
+    },
   },
 };
 </script>

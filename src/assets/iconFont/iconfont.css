@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 4211906 */
-  src: url('iconfont.woff2?t=1692150617751') format('woff2'),
-       url('iconfont.woff?t=1692150617751') format('woff'),
-       url('iconfont.ttf?t=1692150617751') format('truetype');
+  src: url('iconfont.woff2?t=1692254961479') format('woff2'),
+       url('iconfont.woff?t=1692254961479') format('woff'),
+       url('iconfont.ttf?t=1692254961479') format('truetype');
 }
 
 .iconfont {
@@ -13,16 +13,68 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-ziti:before {
+  content: "\e600";
+}
+
+.icon-tumblr:before {
+  content: "\ec99";
+}
+
+.icon-yuanjiao-rect:before {
+  content: "\e64e";
+}
+
+.icon-birdxiaoniao:before {
+  content: "\e736";
+}
+
+.icon-snapchat:before {
+  content: "\e646";
+}
+
+.icon-vimeo:before {
+  content: "\e6b3";
+}
+
+.icon-Youtube-fill:before {
+  content: "\e883";
+}
+
+.icon-instagram-fill:before {
+  content: "\e88f";
+}
+
+.icon-yanse1:before {
+  content: "\e886";
+}
+
+.icon-dianziweilan:before {
+  content: "\e634";
+}
+
+.icon-n:before {
+  content: "\e610";
+}
+
+.icon-Z-fenleidaohang:before {
+  content: "\e72c";
+}
+
+.icon-gonggao:before {
+  content: "\e731";
+}
+
+.icon-dianhua:before {
+  content: "\e655";
+}
+
 .icon-rcd-drag:before {
   content: "\e60e";
 }
 
 .icon-tupian:before {
   content: "\e8ba";
-}
-
-.icon-huadongshangpin:before {
-  content: "\e60b";
 }
 
 .icon-gouwudai:before {

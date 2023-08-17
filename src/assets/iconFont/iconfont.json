@@ -6,6 +6,104 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "1132",
+      "name": "字体",
+      "font_class": "ziti",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "348953",
+      "name": "tumblr",
+      "font_class": "tumblr",
+      "unicode": "ec99",
+      "unicode_decimal": 60569
+    },
+    {
+      "icon_id": "755610",
+      "name": "圆角矩形",
+      "font_class": "yuanjiao-rect",
+      "unicode": "e64e",
+      "unicode_decimal": 58958
+    },
+    {
+      "icon_id": "792496",
+      "name": "bird-小鸟",
+      "font_class": "birdxiaoniao",
+      "unicode": "e736",
+      "unicode_decimal": 59190
+    },
+    {
+      "icon_id": "1080596",
+      "name": "snapchat",
+      "font_class": "snapchat",
+      "unicode": "e646",
+      "unicode_decimal": 58950
+    },
+    {
+      "icon_id": "1567680",
+      "name": "vimeo",
+      "font_class": "vimeo",
+      "unicode": "e6b3",
+      "unicode_decimal": 59059
+    },
+    {
+      "icon_id": "4936989",
+      "name": "Youtube-fill",
+      "font_class": "Youtube-fill",
+      "unicode": "e883",
+      "unicode_decimal": 59523
+    },
+    {
+      "icon_id": "4937026",
+      "name": "instagram-fill",
+      "font_class": "instagram-fill",
+      "unicode": "e88f",
+      "unicode_decimal": 59535
+    },
+    {
+      "icon_id": "9626971",
+      "name": "颜色",
+      "font_class": "yanse1",
+      "unicode": "e886",
+      "unicode_decimal": 59526
+    },
+    {
+      "icon_id": "12839005",
+      "name": "电子围栏",
+      "font_class": "dianziweilan",
+      "unicode": "e634",
+      "unicode_decimal": 58932
+    },
+    {
+      "icon_id": "33616347",
+      "name": "n",
+      "font_class": "n",
+      "unicode": "e610",
+      "unicode_decimal": 58896
+    },
+    {
+      "icon_id": "7193668",
+      "name": "Z-分类导航",
+      "font_class": "Z-fenleidaohang",
+      "unicode": "e72c",
+      "unicode_decimal": 59180
+    },
+    {
+      "icon_id": "14445066",
+      "name": "公告",
+      "font_class": "gonggao",
+      "unicode": "e731",
+      "unicode_decimal": 59185
+    },
+    {
+      "icon_id": "31919284",
+      "name": "电话",
+      "font_class": "dianhua",
+      "unicode": "e655",
+      "unicode_decimal": 58965
+    },
+    {
       "icon_id": "29923325",
       "name": "rcd-drag",
       "font_class": "rcd-drag",
@@ -18,13 +116,6 @@
       "font_class": "tupian",
       "unicode": "e8ba",
       "unicode_decimal": 59578
-    },
-    {
-      "icon_id": "15905484",
-      "name": "滑动商品",
-      "font_class": "huadongshangpin",
-      "unicode": "e60b",
-      "unicode_decimal": 58891
     },
     {
       "icon_id": "16136921",

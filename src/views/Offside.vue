@@ -1,18 +1,48 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
+    <!-- <div class="H100"> -->
     <div class="design-box-operation">
-      <!-- 导航栏 -->
-      <page-notice></page-notice>
+        <div class="H100">
+            <!-- 导航栏 -->
+            <page-notice v-if="curAssembly == 'PageNotice'"
+                         :assembly="pageContent.content"
+                         @call="returnData"></page-notice>
+        </div>
+        <!-- </div> -->
     </div>
+    <!-- </div> -->
+
 </template>
 <script>
-import PageNotice from "../components/edit/PageNotice.vue"
+import PageNotice from "../components/edit/PageNotice.vue";
 export default {
-  components:{
-    "page-notice":PageNotice
+  components: {
+    "page-notice": PageNotice,
   },
   data() {
-    return {};
+    return {
+      pageContent: {},
+      curAssembly: "",
+    };
+  },
+  created() {
+    // 监听radioChange
+    this.$bus.$on("selectAssembly", (res) => {
+      console.info("bus监听-=-=-", res);
+      this.curAssembly = res.assembly;
+      this.pageContent = res;
+    });
+  },
+
+  methods: {
+    getPageArr(res) {
+      console.info("编辑查看信息-=-=", res);
+      this.pageArr = res;
+    },
+    returnData(data) {
+      console.info("", data);
+      this.$emit("callPage", { data, assembly: this.curAssembly });
+    },
   },
 };
 </script>
@@ -29,5 +59,4 @@ export default {
   max-height: calc(100% - 24px);
   overflow: hidden;
 }
-
 </style>

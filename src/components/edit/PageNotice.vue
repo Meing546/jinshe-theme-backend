@@ -3,126 +3,143 @@
         <div class="header">公告栏</div>
         <div class="operation-container">
             <!-- <div class="pl24 pr24 H100"> -->
-                <div class="fw600 fs16 flex mb10">公告栏</div>
-                <div class="mb16">
-                    <el-checkbox-group v-model="group.exhibit">
-                        <el-checkbox :label="1"
-                                     class=" mb10">仅主页</el-checkbox>
-                        <el-checkbox :label="2"
-                                     class="flex">固定顶部展示</el-checkbox>
-                    </el-checkbox-group>
-                </div>
-                <div>
-                    <div class="mb10 ">文本</div>
-                    <quill-editor class="ql-editors"
-                                  ref="myQuillEditor"
-                                  v-model="group.text"
-                                  :options="editorOption">
-                    </quill-editor>
+            <div class="fw600 fs16 flex mb10">公告栏</div>
+            <div class="mb16">
+                <el-checkbox-group v-model="group.exhibit">
+                    <el-checkbox :label="1"
+                                 class=" mb10">仅主页</el-checkbox>
+                    <el-checkbox :label="2"
+                                 class="flex">固定顶部展示</el-checkbox>
+                </el-checkbox-group>
+            </div>
+            <div>
+                <div class="mb10 ">文本</div>
+                <quill-editor class="ql-editors"
+                              ref="myQuillEditor"
+                              v-model="group.text"
+                              :options="editorOption">
+                </quill-editor>
 
-                </div>
-                <div class="mt10">
-                    <div>文字大小</div>
-                    <div class="ranger-container">
-                        <el-slider v-model="group.fontSize"
-                                   :max="12"
-                                   size="mini"
-                                   class="W70 mr15"></el-slider>
-                        <el-input v-model="group.fontSize"
-                                  size="mini"
-                                  class="w90">
-                            <template slot="prepend">H</template>
-                        </el-input>
-                    </div>
-                </div>
-                <div class="mt20 ">
-                    <div class="left">文本</div>
-                    <div class="end">
-                        <el-color-picker v-model="group.constColor"
-                                         size="mini"></el-color-picker>
-                    </div>
-                </div>
-                <div class="mt20 mb20">
-                    <div class="mb10">链接</div>
-                    <el-select v-model="group.link"
-                               size="small"
-                               filterable
-                               clearable
-                               placeholder="搜索或粘贴链接">
-                        <el-option v-for="(item,index) in linkArr"
-                                   :key="index"
-                                   :label="item.label"
-                                   :value="item.value"></el-option>
-                    </el-select>
-                    <div class="fs12 mt4"
-                         style="color:#969799">可选</div>
-                </div>
-
-                <div>
-                    <div class="left">图标元素</div>
-                    <div class="end">
-                        <el-color-picker v-model="group.iconColor"
-                                         size="mini"></el-color-picker>
-                    </div>
-
-                    <el-checkbox-group v-model="group.exhibitMedia">
-                        <el-checkbox :label="1"
-                                     class=" mb10">显示社交媒体</el-checkbox>
-                        <el-checkbox :label="2"
-                                     class="flex">显示联系电话</el-checkbox>
-                    </el-checkbox-group>
-                </div>
-
-                <div class="mt20">
-                    <div class="mb10">联系电话</div>
-                    <el-input v-model="group.phone"
-                              size="small"></el-input>
-                </div>
-
-                <div class="mt20 ">
-                    <div class="left">公告栏背景</div>
-                    <div class="end">
-                        <el-color-picker v-model="group.bgColor"
-                                         size="mini"></el-color-picker>
-                    </div>
-                </div>
-
-                <div class="mt10">
-                    <div>背景不透明度</div>
-                    <div class="ranger-container">
-                        <el-slider v-model="group.bgLucency"
-                                   :max="100"
-                                   size="mini"
-                                   class="W70 mr15"></el-slider>
-                        <el-input v-model="group.bgLucency"
-                                  size="mini"
-                                  class="w90">
-                            <template slot="append">%</template>
-                        </el-input>
-                    </div>
-                </div>
-                <div class="mt20 mb20">
-                    <div class="mb10">公告栏宽度</div>
-                    <el-select v-model="group.width"
-                               size="small"
-                               filterable
-                               clearable
-                               placeholder="搜索或粘贴链接">
-                        <el-option v-for="(item,index) in widthArr"
-                                   :key="index"
-                                   :label="item.label"
-                                   :value="item.value"></el-option>
-                    </el-select>
+            </div>
+            <div class="mt10">
+                <div>文字大小</div>
+                <div class="ranger-container">
+                    <el-slider v-model="group.fontSize"
+                               :max="12"
+                               size="mini"
+                               class="W70 mr15"></el-slider>
+                    <el-input v-model="group.fontSize"
+                              size="mini"
+                              class="w90">
+                        <template slot="prepend">H</template>
+                    </el-input>
                 </div>
             </div>
+            <div class="mt20 ">
+                <div class="left">文本</div>
+                <div class="end">
+                    <el-color-picker v-model="group.constColor"
+                                     size="mini"></el-color-picker>
+                </div>
+            </div>
+            <div class="mt20 mb20">
+                <div class="mb10">链接</div>
+                <el-select v-model="group.link"
+                           size="small"
+                           filterable
+                           clearable
+                           placeholder="搜索或粘贴链接">
+                    <el-option v-for="(item,index) in linkArr"
+                               :key="index"
+                               :label="item.label"
+                               :value="item.value"></el-option>
+                </el-select>
+                <div class="fs12 mt4"
+                     style="color:#969799">可选</div>
+            </div>
+
+            <div>
+                <div class="left">图标元素</div>
+                <div class="end">
+                    <el-color-picker v-model="group.iconColor"
+                                     size="mini"></el-color-picker>
+                </div>
+
+                <el-checkbox-group v-model="group.exhibitMedia">
+                    <el-checkbox :label="1"
+                                 class=" mb10">显示社交媒体</el-checkbox>
+                    <el-checkbox :label="2"
+                                 class="flex">显示联系电话</el-checkbox>
+                </el-checkbox-group>
+            </div>
+
+            <div class="mt20">
+                <div class="mb10">联系电话</div>
+                <el-input v-model="group.phone"
+                          size="small"></el-input>
+            </div>
+
+            <div class="mt20 ">
+                <div class="left">公告栏背景</div>
+                <div class="end">
+                    <el-color-picker v-model="group.bgColor"
+                                     size="mini"></el-color-picker>
+                </div>
+            </div>
+
+            <div class="mt10">
+                <div>背景不透明度</div>
+                <div class="ranger-container">
+                    <el-slider v-model="group.bgLucency"
+                               :max="100"
+                               size="mini"
+                               class="W70 mr15"></el-slider>
+                    <el-input v-model="group.bgLucency"
+                              size="mini"
+                              class="w90">
+                        <template slot="append">%</template>
+                    </el-input>
+                </div>
+            </div>
+            <div class="mt20 mb20">
+                <div class="mb10">公告栏宽度</div>
+                <el-select v-model="group.width"
+                           size="small"
+                           filterable
+                           clearable
+                           placeholder="搜索或粘贴链接">
+                    <el-option v-for="(item,index) in widthArr"
+                               :key="index"
+                               :label="item.label"
+                               :value="item.value"></el-option>
+                </el-select>
+            </div>
+        </div>
         <!-- </div> -->
     </div>
 </template>
 <script>
 import { quillEditor } from "vue-quill-editor";
 export default {
+  props: {
+    assembly: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
+  },
   components: {
     "quill-editor": quillEditor,
+  },
+  watch: {
+    group: {
+      handler(newVal) {
+        console.info("监听-0--",newVal,this.group)
+        this.$emit("call", this.group);
+      },
+      deep: true,
+    },
   },
   data() {
     return {
@@ -161,6 +178,11 @@ export default {
       },
     };
   },
+  mounted() {
+    this.group = JSON.parse(JSON.stringify(this.assembly));
+    console.info("查看信息-=-=-", this.assembly);
+  },
+  methods: {},
 };
 </script>
 <style lang="scss" scoped>

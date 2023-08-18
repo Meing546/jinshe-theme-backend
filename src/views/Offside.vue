@@ -7,6 +7,7 @@
             <page-notice v-if="curAssembly == 'PageNotice'"
                          :assembly="pageContent.content"
                          @call="returnData"></page-notice>
+            <page-navigation v-else-if="curAssembly == 'PageNavigation'"></page-navigation>
             <Intro v-else></Intro>
         </div>
         <!-- </div> -->
@@ -16,13 +17,18 @@
 </template>
 <script>
 import PageNotice from "../components/edit/PageNotice.vue";
+import PageNavigation from "../components/edit/PageNavigation.vue";
 import Intro from "../components/Intro.vue";
 export default {
-  components: { Intro, "page-notice": PageNotice },
+  components: {
+    Intro,
+    "page-notice": PageNotice,
+    "page-navigation": PageNavigation,
+  },
   data() {
     return {
       pageContent: {},
-      curAssembly: "",
+      curAssembly: "PageNavigation",
     };
   },
   created() {
@@ -35,7 +41,7 @@ export default {
 
   methods: {
     selectAssembly(res) {
-      console.info("打印传值-=-=-=",res)
+      console.info("打印传值-=-=-=", res);
       this.curAssembly = res.assembly;
       this.pageContent = res;
     },

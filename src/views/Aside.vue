@@ -56,7 +56,14 @@
                         </div>
 
                     </div>
-                    <!-- 资源库 -->
+                    <!-- 装修添加内容 -->
+                    <div class="section-select"
+                         @click="addResource()"
+                         v-if="menu_id == 0">
+                        <span class="plus iconfont">&#xeaf3;</span>
+                        <span class="ml16">添加内容</span>
+                    </div>
+
                 </div>
                 <div class="section-select-preview "
                      v-if="menu_id == 1">
@@ -64,6 +71,7 @@
                          :key="index">
                         <div class="flex mt10">{{item.title}}</div>
                         <div v-for="(_item,_inx) in item.content"
+                             @click="addContent(item,_item)"
                              :key="index+'_'+_inx"
                              style="margin: 16px 0;">
                             <el-image :src="_item.img"
@@ -117,18 +125,17 @@ export default {
             iconfont: "\ue7ab",
             assembly: "PageNotice",
             content: {
-              id: "123",
-              exhibit: [1,2], //仅主页、固定顶部显示
+              exhibit: [1, 2], //仅主页、固定顶部显示
               text: "<p>Mid-year limited time offer</p>", //文本
               fontSize: 12, //文字大小
               constColor: "#000000", //文本颜色
               link: "", //点击文本
               iconColor: "#000000", //图标颜色
-              exhibitMedia: [1,2], //媒体展示
+              exhibitMedia: [1, 2], //媒体展示
               phone: "022-0123-2345", //联系电话
               bgColor: "#fff6f7", //背景色
-              bgLucency: "", //背景透明度
-              width: "full", //公告栏宽度}
+              bgLucency: 100, //背景透明度
+              width: "full", //公告栏宽度
             },
           },
           {
@@ -152,7 +159,9 @@ export default {
             title: "产品",
             children: [
               {
+                assembly: "PageSingleCommodities",
                 title: "单个商品",
+                iconfont: "\ue603",
                 content: [
                   {
                     img: "https://intl-image.yzcdn.cn/images/i18n-b/store/preview/featured-products.png",
@@ -203,6 +212,7 @@ export default {
   },
   methods: {
     cut(data, type) {
+      console.info("切换-=-",data)
       if (type == 1) {
         this.menu_id = data == this.menu_id ? -1 : data;
         if (data == 1) {
@@ -214,9 +224,30 @@ export default {
         this.sub_menu_index = this.sub_menu_id == -1 ? 0 : data.index;
         if (this.menu_id == 0) {
           this.menu_id = -1;
-          this.$bus.$emit("selectAssembly", this.sub_menu_temp[0][data.index]);
+          // this.$bus.$emit("selectAssembly", this.sub_menu_temp[0][data.index]);
+          this.$emit("selectAssembly", {
+            type: "Aside",
+            data: this.sub_menu_temp[0][data.index],
+          });
         }
       }
+    },
+    addResource() {
+      this.menu_id = 1;
+      this.sub_menu_id = this.sub_menu_temp[1][0].id;
+      this.sub_menu_index = 0;
+    },
+    addContent(item) {
+      let data = {
+        ...item,
+        isShow: true,
+        prefix: false,
+        id:this.sub_menu_temp[0].length
+      };
+      data.content = null;
+      this.sub_menu_temp[0].push(data);
+      this.menu_id = 0;
+      this.cut({index:data.id},2)
     },
   },
 };
@@ -282,6 +313,21 @@ export default {
       width: 280px;
       height: 100vh;
       overflow: auto;
+    }
+    .section-select {
+      display: flex;
+      -ms-flex-align: center;
+      align-items: center;
+      padding: 20px 24px 28px 45px;
+      background: #fff;
+      color: #476cf0;
+      cursor: pointer;
+      .plus {
+        font-weight: 600;
+        font-size: 16px;
+        background: rgba(71, 108, 240, 0.1);
+        padding: 5px 6px;
+      }
     }
     .section-select-category {
       width: 180px;

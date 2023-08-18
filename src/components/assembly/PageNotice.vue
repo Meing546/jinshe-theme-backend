@@ -1,7 +1,8 @@
 <template>
-    <div class="header-announcement" v-if="Object.keys(assemblyData).length>0" >
+    <div class="header-announcement"
+         v-if="Object.keys(assemblyData).length>0" :class="{'fixed-top':assemblyData.exhibit.indexOf(2)!=-1}">
         <div class="body-bg"
-             :style="{background:assemblyData.bgColor,opacity:1}"></div>
+             :style="{background:assemblyData.bgColor,opacity:(assemblyData.bgLucency*0.01)}"></div>
         <ul class="announcement-body">
             <li class="body-left">
                 <div :style="{color:assemblyData.iconColor}"
@@ -11,7 +12,8 @@
                 </div>
             </li>
             <li class="body-center">
-                <a v-html="assemblyData.text" :style="{color:assemblyData.constColor}">
+                <a v-html="assemblyData.text"
+                   :style="{'font-weight': 'inherit',color:assemblyData.constColor,'font-size':fontSizeObj[assemblyData.fontSize]}">
                 </a>
             </li>
             <li class="body-left-right">
@@ -61,6 +63,20 @@ export default {
         { icon: "\ue883", href: "www.YouTube.com" },
         { icon: "\ue6b3", href: "www.Vimeo.com" },
       ],
+      fontSizeObj: {
+        1: "80px",
+        2: "56px",
+        3: "48px",
+        4: "40px",
+        5: "32px",
+        6: "28px",
+        7: "24px",
+        8: "20px",
+        9: "18px",
+        10: "16px",
+        11: "14px",
+        12: "12px",
+      },
       // group: {
       //   exhibit: [], //仅主页、固定顶部显示
       //   text: "", //文本
@@ -84,6 +100,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .fixed-top {
+  position: fixed;
   top: 0px;
   left: 0px;
   width: 100%;

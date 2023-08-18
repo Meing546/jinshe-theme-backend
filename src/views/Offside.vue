@@ -7,6 +7,7 @@
             <page-notice v-if="curAssembly == 'PageNotice'"
                          :assembly="pageContent.content"
                          @call="returnData"></page-notice>
+            <Intro v-else></Intro>
         </div>
         <!-- </div> -->
     </div>
@@ -15,10 +16,9 @@
 </template>
 <script>
 import PageNotice from "../components/edit/PageNotice.vue";
+import Intro from "../components/Intro.vue";
 export default {
-  components: {
-    "page-notice": PageNotice,
-  },
+  components: { Intro, "page-notice": PageNotice },
   data() {
     return {
       pageContent: {},
@@ -27,14 +27,18 @@ export default {
   },
   created() {
     // 监听radioChange
-    this.$bus.$on("selectAssembly", (res) => {
-      console.info("bus监听-=-=-", res);
-      this.curAssembly = res.assembly;
-      this.pageContent = res;
-    });
+    // this.$bus.$on("selectAssembly", (res) => {
+    //   this.curAssembly = res.assembly;
+    //   this.pageContent = res;
+    // });
   },
 
   methods: {
+    selectAssembly(res) {
+      console.info("打印传值-=-=-=",res)
+      this.curAssembly = res.assembly;
+      this.pageContent = res;
+    },
     getPageArr(res) {
       console.info("编辑查看信息-=-=", res);
       this.pageArr = res;

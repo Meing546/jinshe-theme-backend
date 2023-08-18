@@ -1,11 +1,23 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
     <div class="browse-box">
-        <div class="W100">
+        <div class="W100 relative">
             <div v-for="(item,index) in pageArr"
                  :key="index"
                  @click="edit(item,index)"
-                 class="fJRcxb W100">
+                 class="fJRcxb W100 absolute"
+                 :class="{'active':(curAssembly == item.assembly)}">
+                <div v-show="curAssembly == item.assembly">
+                    <div class="wrapper-section-name">{{ item.title }}</div>
+                    <div class="wrapper-section-operate white fs12"
+                         v-if="['PageNotice'].indexOf(item.assembly) == -1">
+                        <div class="short-cut-item"><span class="iconfont">&#xe795;</span></div>
+                        <div class="short-cut-item"><span class="iconfont roate180">&#xe795;</span></div>
+                        <div class="short-cut-item"><span class="iconfont">&#xe622;</span></div>
+                        <div class="short-cut-item"><span class="iconfont">&#xe74b;</span></div>
+                    </div>
+                </div>
+
                 <!-- 导航栏 -->
                 <page-notice v-if="item.assembly == 'PageNotice'"
                              ref="myPageNotice"
@@ -23,25 +35,28 @@ export default {
   data() {
     return {
       pageArr: [],
+      curAssembly: "",
     };
   },
-  mounted() {
-  },
+  mounted() {},
   methods: {
     edit(item, index) {
       console.log(item, index);
+      this.curAssembly = item.assembly;
+      this.$emit("selectAssembly", { type: "Browse", data: item });
+    },
+    selectAssembly(res) {
+      this.curAssembly = res.assembly;
     },
     getPageArr(res) {
       this.pageArr = JSON.parse(JSON.stringify(res));
-
     },
     callPage(res) {
-      console.info("编辑123-=-=",res.data)
       if (res.assembly) {
-        this.pageArr.forEach(ele => {
-          if(ele.assembly == res.assembly)ele.content = res.data;
-        })
-        this.pageArr = JSON.parse(JSON.stringify(this.pageArr))
+        this.pageArr.forEach((ele) => {
+          if (ele.assembly == res.assembly) ele.content = res.data;
+        });
+        this.pageArr = JSON.parse(JSON.stringify(this.pageArr));
       }
     },
   },
@@ -59,7 +74,46 @@ export default {
   margin: 0 20px;
   margin-top: 12px;
   position: relative;
-
+  .fJRcxb {
+    .wrapper-section-name {
+      height: 23px;
+      line-height: 23px;
+      left: 0px;
+      top: 0px;
+      padding: 0px 3px;
+      color: rgb(255, 255, 255);
+      text-align: center;
+      background: rgb(255, 109, 0);
+      border-radius: 0px 0px 4px;
+      display: initial;
+      z-index: 200;
+      position: absolute;
+    }
+    .wrapper-section-operate {
+      position: absolute;
+      z-index: 99999;
+      right: 0px;
+      top: 0px;
+      border-radius: 0px 0px 0px 4px;
+      overflow: hidden;
+      display: flex;
+      -webkit-box-align: center;
+      align-items: center;
+      .short-cut-item {
+        display: flex;
+        -webkit-box-pack: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        align-items: center;
+        width: 24px;
+        height: 24px;
+        background-color: rgb(255, 109, 0);
+        .roate180 {
+          transform: rotate(180deg);
+        }
+      }
+    }
+  }
   // .fJRcxb.active.announcement-bar::after {
   //   height: 56px;
   //   position: absolute;

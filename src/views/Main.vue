@@ -6,8 +6,10 @@
         </el-row>
         <el-row class="design-area">
             <v-aside style="text-align: center;"
-                     @pageArr="getPageArr"></v-aside>
-            <v-browse ref="myBrowse"></v-browse>
+                     @pageArr="getPageArr"
+                     @selectAssembly="selectAssembly"></v-aside>
+            <v-browse ref="myBrowse"
+                      @selectAssembly="selectAssembly"></v-browse>
 
             <v-offside ref="myOffside"
                        @callPage="callPage"></v-offside>
@@ -37,8 +39,14 @@ export default {
       this.$refs.myOffside.getPageArr(res);
     },
     callPage(res) {
-      console.info("获取到-=-",res)
+      console.info("获取到-=-", res);
       this.$refs.myBrowse.callPage(res);
+    },
+    selectAssembly(res) {
+      if (res.type == "Aside") {
+        this.$refs.myBrowse.selectAssembly(res.data);
+      }
+      this.$refs.myOffside.selectAssembly(res.data);
     },
   },
 };

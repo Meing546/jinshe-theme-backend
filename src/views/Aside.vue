@@ -127,7 +127,7 @@ export default {
             content: {
               exhibit: [1, 2], //仅主页、固定顶部显示
               text: "<p>Mid-year limited time offer</p>", //文本
-              fontSize: 12, //文字大小
+              fontSize: 11, //文字大小
               constColor: "#000000", //文本颜色
               link: "", //点击文本
               iconColor: "#000000", //图标颜色

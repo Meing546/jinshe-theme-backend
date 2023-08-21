@@ -1,11 +1,12 @@
 <template>
     <div class="header-announcement"
-         v-if="Object.keys(assemblyData).length>0" :class="{'fixed-top':assemblyData.exhibit.indexOf(2)!=-1}">
+         v-if="Object.keys(assemblyData).length>0"
+         :class="{'fixed-top':assemblyData.exhibit.indexOf(2)!=-1}">
         <div class="body-bg"
              :style="{background:assemblyData.bgColor,opacity:(assemblyData.bgLucency*0.01)}"></div>
         <ul class="announcement-body">
             <li class="body-left">
-                <div :style="{color:assemblyData.iconColor}"
+                <div :style="{'font-weight': '600',color:assemblyData.iconColor}"
                      v-if="assemblyData.phone && assemblyData.exhibitMedia.indexOf(2) != -1">
                     <span class="iconfont ">&#xe655;</span>
                     <span>{{ assemblyData.phone }}</span>
@@ -13,7 +14,7 @@
             </li>
             <li class="body-center">
                 <a v-html="assemblyData.text"
-                   :style="{'font-weight': 'inherit',color:assemblyData.constColor,'font-size':fontSizeObj[assemblyData.fontSize]}">
+                   :style="{'font-weight': '700',color:assemblyData.constColor,'font-size':fontSizeObj[assemblyData.fontSize]}">
                 </a>
             </li>
             <li class="body-left-right">
@@ -140,7 +141,21 @@ export default {
     box-sizing: border-box;
     flex: 3 1 0%;
     text-align: center;
-    padding: 16px 80px;
+    padding: 4px 16px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .header-announcement .announcement-body {
+    flex-direction: column;
+  }
+  .header-announcement {
+    min-height: 42px;
+    padding: 6px 0px;
+    box-sizing: border-box;
+  }
+  .announcement-body-left {
+    text-align: center;
   }
 }
 </style>

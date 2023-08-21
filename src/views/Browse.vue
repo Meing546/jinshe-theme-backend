@@ -1,29 +1,33 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-    <div class="browse-box">
-        <div class="W100 relative">
-            <div v-for="(item,index) in pageArr"
-                 :key="index"
-                 @click="edit(item,index)"
-                 class="fJRcxb W100 absolute"
-                 :class="{'active':(curAssembly == item.assembly)}">
-                <div v-show="curAssembly == item.assembly">
-                    <div class="wrapper-section-name">{{ item.title }}</div>
-                    <div class="wrapper-section-operate white fs12"
-                         v-if="['PageNotice'].indexOf(item.assembly) == -1">
-                        <div class="short-cut-item"><span class="iconfont">&#xe795;</span></div>
-                        <div class="short-cut-item"><span class="iconfont roate180">&#xe795;</span></div>
-                        <div class="short-cut-item"><span class="iconfont">&#xe622;</span></div>
-                        <div class="short-cut-item"><span class="iconfont">&#xe74b;</span></div>
+    <!-- <div :class="{'h5-preview-content':(adaptationIndex==2)}"> -->
+    <!-- :class="{'h5-preview-content':(adaptationIndex==2)}" -->
+    <div class="browse-box ">
+        <!-- <div :class="{'h5-preview-content':(adaptationIndex==2)}"> -->
+            <div class="W100 relative">
+                <div v-for="(item,index) in pageArr"
+                     :key="index"
+                     @click="edit(item,index)"
+                     class="fJRcxb W100 absolute"
+                     :class="{'active':(curAssembly == item.assembly)}">
+                    <div v-show="curAssembly == item.assembly">
+                        <div class="wrapper-section-name">{{ item.title }}</div>
+                        <div class="wrapper-section-operate white fs12"
+                             v-if="['PageNotice'].indexOf(item.assembly) == -1">
+                            <div class="short-cut-item"><span class="iconfont">&#xe795;</span></div>
+                            <div class="short-cut-item"><span class="iconfont roate180">&#xe795;</span></div>
+                            <div class="short-cut-item"><span class="iconfont">&#xe622;</span></div>
+                            <div class="short-cut-item"><span class="iconfont">&#xe74b;</span></div>
+                        </div>
                     </div>
-                </div>
 
-                <!-- 导航栏 -->
-                <page-notice v-if="item.assembly == 'PageNotice'"
-                             ref="myPageNotice"
-                             :assembly="item"></page-notice>
+                    <!-- 导航栏 -->
+                    <page-notice v-if="item.assembly == 'PageNotice'"
+                                 ref="myPageNotice"
+                                 :assembly="item"></page-notice>
+                </div>
             </div>
-        </div>
+        <!-- </div> -->
     </div>
 </template>
 <script>
@@ -36,9 +40,14 @@ export default {
     return {
       pageArr: [],
       curAssembly: "",
+      adaptationIndex: 1,
     };
   },
-  mounted() {},
+  mounted() {
+    this.$bus.$on("adaptationIndex", (index) => {
+      this.adaptationIndex = index;
+    });
+  },
   methods: {
     edit(item, index) {
       console.log(item, index);
@@ -63,6 +72,11 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+// .h5-preview-content {
+//   width: 375px !important;
+//   margin-left: 40%;
+//   background-color: red;
+// }
 .browse-box {
   display: flex;
   -webkit-box-orient: vertical;
@@ -74,6 +88,7 @@ export default {
   margin: 0 20px;
   margin-top: 12px;
   position: relative;
+  box-sizing: border-box;
   .fJRcxb {
     .wrapper-section-name {
       height: 23px;

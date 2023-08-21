@@ -21,7 +21,8 @@ import 'quill/dist/quill.bubble.css'
 
 // 注册富文本编辑器组件为全局组件
 Vue.use(VueQuillEditor)
-Vue.use(ElementUI)
+// Vue.use(ElementUI)
+Vue.use(ElementUI, { size: 'small', zIndex: 3000 });
 Vue.config.productionTip = false
 Vue.prototype.$bus = new Vue();
 new Vue({

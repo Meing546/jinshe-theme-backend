@@ -8,6 +8,7 @@
             <v-aside style="text-align: center;"
                      @pageArr="getPageArr"
                      @selectAssembly="selectAssembly"></v-aside>
+
             <v-browse ref="myBrowse"
                       @selectAssembly="selectAssembly"></v-browse>
 

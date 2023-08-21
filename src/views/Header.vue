@@ -30,7 +30,7 @@
             <el-row class="device_tool_change">
                 <div v-for="(item,index) in adaptation_arr"
                      :key="index"
-                     @click="adaptationIndex = index+1">
+                     @click="cutScreen(index)">
                     <el-image :src="adaptationIndex==index+1?item.select:item.value"
                               :class="adaptationIndex == index+1?'tool-active':''">
                     </el-image>
@@ -84,6 +84,12 @@ export default {
       ],
       return_img: require("@/assets/icon/return.png"),
     };
+  },
+  methods: {
+    cutScreen(index) {
+      this.adaptationIndex = index + 1;
+      this.$bus.$emit("adaptationIndex", this.adaptationIndex);
+    },
   },
 };
 </script>

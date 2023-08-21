@@ -276,3 +276,28 @@
 .fs30{font-size: 30px !important;}
 .fs36{font-size: 36px;}
 .fw600{font-weight: 600;}
+
+i{cursor:pointer}
+
+.el-slider__button {
+    width: 12px !important;
+    height: 12px !important;
+  }
+.el-slider__bar {
+    height: 4px !important;
+}
+.el-slider__runway {
+    height: 4px !important;
+}
+.el-color-picker__trigger {
+    width: 46px !important;
+}
+.el-color-picker__color {
+    width: 36px !important;
+}
+.el-icon-close:before {
+    content: "" !important;
+}
+.el-icon-arrow-down:before {
+    content: "" !important;
+}

@@ -1,12 +1,12 @@
 <template>
     <div class="H100">
-        <div class="H100"
-             v-if="!goMenu">
+        <div class="H100">
             <div class="header">导航</div>
             <div class="operation-container">
                 <div class="pb16 borB">菜单</div>
                 <div v-for="(item,index) in group.content"
                      :key="index"
+                     @click="zIndexPanel = 2"
                      class="borB section-item">
                     <span class="iconfont pl2 mr8"
                           style="color:#CCD0D7">&#xe60e;</span>
@@ -62,15 +62,15 @@
                             </div>
                             <div class="edit-button">
                                 <span class="edit-item">更改</span>
-                                <sapn class="edit-item">删除</sapn>
+                                <span class="edit-item">删除</span>
                             </div>
                         </div>
                     </div>
                     <div class="mt24">
                         <div class="mb10">logo对齐方式</div>
-                        <el-select v-model="aligningType">
-                            <el-option :value="1">左侧</el-option>
-                            <el-option :value="2">居中</el-option>
+                        <el-select v-model="group.aligningType">
+                            <el-option value="1">左侧</el-option>
+                            <el-option value="2">居中</el-option>
                         </el-select>
                     </div>
                 </div>
@@ -122,18 +122,18 @@
                         <div>子菜单打开方式</div>
                         <el-select v-model="group.openMode">
                             <el-option label="下拉展开"
-                                       :value="1"></el-option>
+                                       value="1"></el-option>
                             <el-option label="点击进入"
-                                       :value="2"></el-option>
+                                       value="2"></el-option>
                         </el-select>
                     </div>
                     <div class="mt10">
                         <div>H5展开图标样式</div>
                         <el-select v-model="group.expansionStyle">
                             <el-option label="样式1"
-                                       :value="1"></el-option>
+                                       value="1"></el-option>
                             <el-option label="样式2"
-                                       :value="2"></el-option>
+                                       value="2"></el-option>
                         </el-select>
                     </div>
                     <div class="mt10">
@@ -233,9 +233,11 @@
             </div>
         </div>
 
-        <div class="H100">
+        <div class="H100  content_edit_panel"
+             :style="{width:zIndexPanel == 2?'100%':'0px'}">
             <div class="header flex pl20">
-                <sapn class="iconfont fs20">&#xe61e;</sapn>
+                <i @click="zIndexPanel--"
+                   class="iconfont fs20">&#xe61e;</i>
             </div>
             <div class="operation-container">
 
@@ -285,7 +287,7 @@
                         <div>链接</div>
                         <el-select class="mt10"
                                    v-model="group.content[contentIndex].children[stairIndex].link">
-                            <el-option></el-option>
+                            <!-- <el-option></el-option> -->
                         </el-select>
                         <div style="color:#969799">可选</div>
                     </div>
@@ -294,9 +296,9 @@
                         <div class="mb10">打开方式</div>
                         <el-select v-model="group.content[contentIndex].openMode">
                             <el-option label="当前页面打开"
-                                       :value="1"></el-option>
+                                       value="1"></el-option>
                             <el-option label="新窗口打开"
-                                       :value="2"></el-option>
+                                       value="2"></el-option>
                         </el-select>
                     </div>
                     <div>
@@ -319,7 +321,8 @@
 export default {
   data() {
     return {
-      goMenu: true,
+      zIndexPanel: 1,
+      goMenu: false,
       contentIndex: 1,
       stairIndex: 1,
       group: {
@@ -423,6 +426,13 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.content_edit_panel {
+  position: absolute;
+  width: 0px;
+  right: 0;
+  top: 0;
+  transition: 0.3s;
+}
 .header {
   background: #fff;
   font-size: 16px;
@@ -431,21 +441,12 @@ export default {
   line-height: 64px;
   margin-bottom: 8px;
 }
-.section-item {
-  display: flex;
-  -webkit-box-align: center;
-  align-items: center;
-  height: 64px;
-  line-height: 64px;
-  cursor: pointer;
-}
 .operation-container {
   background: rgb(255, 255, 255);
   padding: 20px;
   box-sizing: border-box;
   overflow: hidden auto;
   height: calc(100% - 72px);
-
   &::-webkit-scrollbar {
     width: 4px;
     height: 4px;
@@ -460,138 +461,126 @@ export default {
     -webkit-border-radius: 2px;
     border-radius: 2px;
   }
-}
 
-.add-block-item {
-  line-height: 64px;
-  background: #fff;
-  font-size: 16px;
-  font-weight: 400;
-  color: #476cf0;
-  position: relative;
-  -webkit-box-shadow: 0 1px 0 0 #f2f3f5;
-  box-shadow: 0 1px 0 0 #f2f3f5;
-  display: flex;
-  justify-content: space-between;
-  text-align: left;
-  cursor: pointer;
-
-  .plus {
-    font-weight: 600;
-    font-size: 16px;
-    background: rgba(71, 108, 240, 0.1);
-    padding: 4px 5px;
-    margin: 0 18px 0 28px;
-  }
-}
-
-.block-list {
-  .select-block-item {
+  .section-item {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    height: 64px;
+    line-height: 64px;
     cursor: pointer;
-    padding: 10px 20px;
   }
-  .select-block-item:hover {
-    background: rgba(0, 0, 0, 0.1);
+  .add-block-item {
+    line-height: 64px;
+    background: #fff;
+    font-size: 16px;
+    font-weight: 400;
+    color: #476cf0;
+    position: relative;
+    -webkit-box-shadow: 0 1px 0 0 #f2f3f5;
+    box-shadow: 0 1px 0 0 #f2f3f5;
+    display: flex;
+    justify-content: space-between;
+    text-align: left;
+    cursor: pointer;
+
+    .plus {
+      font-weight: 600;
+      font-size: 16px;
+      background: rgba(71, 108, 240, 0.1);
+      padding: 4px 5px;
+      margin: 0 18px 0 28px;
+    }
   }
-}
-.logoTitle {
-  line-height: 30px;
-  background: #fff;
-  text-align: left;
-  font-weight: 600;
-  color: #15161b;
-  font-size: 16px;
-  margin-bottom: 10px;
-}
-.image-picker-container {
-  height: 230px;
-  margin-top: 8px;
-  background: #b9bfc91f;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  position: relative;
-  border-radius: 2px 2px 0 0;
-  border: 1px solid #ebedf0;
-  cursor: pointer;
-}
-.img-selected-box {
-  width: 100%;
-  height: calc(100% - 40px);
-  -webkit-box-pack: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  align-items: center;
-  display: flex;
-  .img-by-select {
-    max-height: 100%;
-    max-width: 100%;
-    vertical-align: middle;
+
+  .block-list {
+    .select-block-item {
+      cursor: pointer;
+      padding: 10px 20px;
+    }
+    .select-block-item:hover {
+      background: rgba(0, 0, 0, 0.1);
+    }
   }
-}
-.edit-button {
-  background: #fff;
-  height: 40px;
-  display: flex;
-  line-height: 40px;
-  border-radius: 2px;
-  border-top: 1px solid #ebedf0;
-  width: 100%;
-  font-size: 16px;
-  cursor: pointer;
-  .edit-item:first-child {
-    border-right: 1px solid #ebedf0;
+
+  .logoTitle {
+    line-height: 30px;
+    background: #fff;
+    text-align: left;
+    font-weight: 600;
+    color: #15161b;
+    font-size: 16px;
+    margin-bottom: 10px;
   }
-  .edit-item {
-    -webkit-box-flex: 1;
-    -ms-flex: 1;
-    flex: 1;
-    border-bottom: 1px solid #ebedf0;
+  .image-picker-container {
+    height: 230px;
+    margin-top: 8px;
+    background: #b9bfc91f;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    position: relative;
+    border-radius: 2px 2px 0 0;
+    border: 1px solid #ebedf0;
+    cursor: pointer;
+    .img-selected-box {
+      width: 100%;
+      height: calc(100% - 40px);
+      -webkit-box-pack: center;
+      justify-content: center;
+      -webkit-box-align: center;
+      align-items: center;
+      display: flex;
+      .img-by-select {
+        max-height: 100%;
+        max-width: 100%;
+        vertical-align: middle;
+      }
+    }
+
+    .edit-button {
+      background: #fff;
+      height: 40px;
+      display: flex;
+      line-height: 40px;
+      border-radius: 2px;
+      border-top: 1px solid #ebedf0;
+      width: 100%;
+      font-size: 16px;
+      cursor: pointer;
+      .edit-item:first-child {
+        border-right: 1px solid #ebedf0;
+      }
+      .edit-item {
+        -webkit-box-flex: 1;
+        -ms-flex: 1;
+        flex: 1;
+        border-bottom: 1px solid #ebedf0;
+      }
+    }
   }
-}
-.navSet {
-  line-height: 30px;
-  background: #fff;
-  text-align: left;
-  font-weight: 600;
-  color: #15161b;
-  font-size: 16px;
-  margin-bottom: 10px;
-}
-.ranger-container {
-  display: flex;
-  line-height: 46px;
-  -webkit-box-align: center;
-  align-items: center;
-}
-.hint {
-  color: #969799;
-  font-size: 14px;
-  line-height: 20px;
-}
-</style>
-<style>
-.el-slider__button {
-  width: 12px !important;
-  height: 12px !important;
-}
-.el-slider__bar {
-  height: 4px !important;
-}
-.el-slider__runway {
-  height: 4px !important;
-}
-.el-color-picker__trigger {
-  width: 46px !important;
-}
-.el-color-picker__color {
-  width: 36px !important;
-}
-.el-icon-close:before {
-  content: "" !important;
-}
-.el-icon-arrow-down:before {
-  content: "" !important;
+
+  .navSet {
+    line-height: 30px;
+    background: #fff;
+    text-align: left;
+    font-weight: 600;
+    color: #15161b;
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+
+  .ranger-container {
+    display: flex;
+    line-height: 46px;
+    -webkit-box-align: center;
+    align-items: center;
+  }
+  .hint {
+    color: #969799;
+    font-size: 14px;
+    line-height: 20px;
+  }
 }
 </style>

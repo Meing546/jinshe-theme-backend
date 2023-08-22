@@ -1,34 +1,36 @@
 <template>
     <div class="H100">
+        <!-- 一级 -->
         <div class="H100">
             <div class="header">导航</div>
             <div class="operation-container">
                 <div class="pb16 borB">菜单</div>
                 <div v-for="(item,index) in group.content"
                      :key="index"
-                     @click="zIndexPanel = 2"
+                     @click="cutPanel(1,index) "
                      class="borB section-item">
                     <span class="iconfont pl2 mr8"
                           style="color:#CCD0D7">&#xe60e;</span>
                     <span class="iconfont fs20"
                           style="color:#646566">&#xe8ae;</span>
                     <span class="pl16 fs16"
-                          style="color:#15161b">{{ item.title }}</span>
+                          style="color:#15161b">{{ item.title?item.title:item.type==1?'菜单导航':'自定义菜单' }}</span>
                 </div>
                 <div class="borB">
-
                     <el-popover placement="bottom-end"
                                 width="100"
                                 trigger="manual"
                                 v-model="visible">
 
                         <div class="block-list">
-                            <div class="select-block-item">菜单导航(0/1)</div>
-                            <div class="select-block-item">自定义菜单</div>
+                            <div class="select-block-item"
+                                 @click="addMenu(1,1)">菜单导航(0/1)</div>
+                            <div class="select-block-item"
+                                 @click="addMenu(1,2)">自定义菜单</div>
                         </div>
                         <div class="add-block-item"
                              slot="reference"
-                             @click="visible = !visible">
+                             @click.stop="visible = !visible">
                             <div><span class="plus iconfont">&#xeaf3;</span>
                                 <span>添加内容</span>
                             </div>
@@ -69,8 +71,10 @@
                     <div class="mt24">
                         <div class="mb10">logo对齐方式</div>
                         <el-select v-model="group.aligningType">
-                            <el-option value="1">左侧</el-option>
-                            <el-option value="2">居中</el-option>
+                            <el-option :value="1"
+                                       label="左侧"></el-option>
+                            <el-option :value="2"
+                                       label="居中"></el-option>
                         </el-select>
                     </div>
                 </div>
@@ -122,18 +126,18 @@
                         <div>子菜单打开方式</div>
                         <el-select v-model="group.openMode">
                             <el-option label="下拉展开"
-                                       value="1"></el-option>
+                                       :value="1"></el-option>
                             <el-option label="点击进入"
-                                       value="2"></el-option>
+                                       :value="2"></el-option>
                         </el-select>
                     </div>
                     <div class="mt10">
                         <div>H5展开图标样式</div>
                         <el-select v-model="group.expansionStyle">
                             <el-option label="样式1"
-                                       value="1"></el-option>
+                                       :value="1"></el-option>
                             <el-option label="样式2"
-                                       value="2"></el-option>
+                                       :value="2"></el-option>
                         </el-select>
                     </div>
                     <div class="mt10">
@@ -232,23 +236,24 @@
                 </div>
             </div>
         </div>
-
+        <!-- 菜单 -->
         <div class="H100  content_edit_panel"
-             :style="{width:zIndexPanel == 2?'100%':'0px'}">
+             :style="{width:zIndexPanel > 1?'100%':'0px'}">
             <div class="header flex pl20">
                 <i @click="zIndexPanel--"
                    class="iconfont fs20">&#xe61e;</i>
             </div>
-            <div class="operation-container">
-
+            <div class="operation-container"
+                 v-if="group.content[contentIndex].children">
                 <div class="pb16 borB">内容</div>
                 <div v-for="(item,index) in group.content[contentIndex].children"
                      :key="index"
+                     @click="cutPanel(2,index,item)"
                      class="borB section-item">
                     <span class="iconfont pl2 mr8"
                           style="color:#CCD0D7">&#xe60e;</span>
                     <span class="iconfont fs20"
-                          style="color:#646566"> {{item.type==1?'&#xe8e1;':'&#xe8ba;'}} </span>
+                          style="color:#646566"> {{item.type==1?'&#xe8ba;':'&#xe8e1;'}} </span>
                     <span class="pl16 fs16"
                           style="color:#15161b">{{ item.type==1?'图片':'菜单组'}}</span>
                 </div>
@@ -256,96 +261,284 @@
                     <el-popover placement="bottom-end"
                                 width="100"
                                 trigger="manual"
-                                v-model="visible">
+                                v-model="visible1">
 
                         <div class="block-list">
-                            <div class="select-block-item">菜单组</div>
-                            <div class="select-block-item">图片</div>
+                            <div class="select-block-item"
+                                 @click="addMenu(2,1)">菜单组</div>
+                            <div class="select-block-item"
+                                 @click="addMenu(2,2)">图片</div>
                         </div>
                         <div class="add-block-item"
                              slot="reference"
-                             @click="visible = !visible">
+                             @click="visible1 = !visible1">
                             <div><span class="plus iconfont">&#xeaf3;</span>
                                 <span>添加内容</span>
                             </div>
                             <div>
                                 <i style="color:#B9BFC9"
-                                   :class="!visible?'el-icon-caret-bottom':'el-icon-caret-top'"></i>
+                                   :class="!visible1?'el-icon-caret-bottom':'el-icon-caret-top'"></i>
                             </div>
                         </div>
                     </el-popover>
 
                 </div>
-
-                <div>
+                <div v-if="group.content[contentIndex]">
                     <div class="navSet">设置</div>
                     <div class="mt20">
-                        <div class="mb10">菜单标签</div>
-                        <el-input v-model="group.content[contentIndex].children[stairIndex].title"></el-input>
+                        <div class="mb10">菜单标题</div>
+                        <el-input v-model="group.content[contentIndex].title"></el-input>
                     </div>
                     <div class="mt20">
                         <div>链接</div>
                         <el-select class="mt10"
-                                   v-model="group.content[contentIndex].children[stairIndex].link">
-                            <!-- <el-option></el-option> -->
+                                   v-model="group.content[contentIndex].link">
+                            <el-option></el-option>
                         </el-select>
-                        <div style="color:#969799">可选</div>
+                        <div class="textColor">可选</div>
                     </div>
 
                     <div class="mt20 mb10">
                         <div class="mb10">打开方式</div>
                         <el-select v-model="group.content[contentIndex].openMode">
-                            <el-option label="当前页面打开"
-                                       value="1"></el-option>
-                            <el-option label="新窗口打开"
-                                       value="2"></el-option>
+                            <el-option v-for="item in openModeArr"
+                                       :key="item.value"
+                                       :value="item.value"
+                                       :label="item.label"></el-option>
                         </el-select>
                     </div>
                     <div>
-                        <el-checkbox v-model="group.content[contentIndex].children[stairIndex].showTag">显示标签</el-checkbox>
+                        <el-checkbox v-model="group.content[contentIndex].showTag">显示标签</el-checkbox>
                     </div>
-
-                    <el-button type="text">
-                        <span calss="iconfont">&#xe74b;</span>
+                    <div class="themeColor mt20 hand">
+                        <i class="iconfont">&#xe74b;</i>
                         删除内容
-                    </el-button>
+                    </div>
                 </div>
 
             </div>
 
         </div>
+        <!-- 菜单组-->
+        <div class="H100 content_edit_panel"
+             :style="{width:zIndexPanel > 2?'100%':'0px'}">
+            <div class="header flex pl20">
+                <i @click="zIndexPanel--"
+                   class="iconfont fs20">&#xe61e;</i>
+            </div>
+            <div class="operation-container"
+                 v-if="group.content[contentIndex].children && group.content[contentIndex].children[stairIndex] &&group.content[contentIndex].children[stairIndex].children">
+                <div class="pb16 borB">内容</div>
+                <div v-for="(item,index) in group.content[contentIndex].children[stairIndex].children"
+                     :key="index"
+                     @click="cutPanel(3,index)"
+                     class="borB section-item">
+                    <span class="iconfont pl2 mr8"
+                          style="color:#CCD0D7">&#xe60e;</span>
+                    <span class="iconfont fs20"
+                          style="color:#646566"> &#xe8e1;</span>
+                    <span class="pl16 fs16"
+                          style="color:#15161b">{{ item.title?item.title:"菜单标题" }}</span>
+                </div>
+                <div class="borB">
+                    <div class="add-block-item"
+                         @click="addMenu(3)">
+                        <div><span class="plus iconfont">&#xeaf3;</span>
+                            <span>添加内容</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="themeColor mt20 hand">
+                    <i class="iconfont">&#xe74b;</i>
+                    删除内容
+                </div>
 
+            </div>
+        </div>
+        <!-- 菜单信息编辑 -->
+        <div class="H100 content_edit_panel"
+             :style="{width:zIndexPanel > 3?'100%':'0px'}">
+            <div class="header flex pl20">
+                <i @click="zIndexPanel--"
+                   class="iconfont fs20">&#xe61e;</i>
+            </div>
+            <div class="operation-container"
+                 v-if="group.content[contentIndex].children && group.content[contentIndex].children[stairIndex] && group.content[contentIndex].children[stairIndex].children &&  group.content[contentIndex].children[stairIndex].children.length">
+                <div class="mt10">
+                    <div class="mb10">菜单标题</div>
+                    <el-input v-model="group.content[contentIndex].children[stairIndex].children[secondIndex].title"></el-input>
+                </div>
+                <div class="mt40">
+                    <div class="mb10">链接</div>
+                    <el-select v-model="group.content[contentIndex].children[stairIndex].children[secondIndex].link"></el-select>
+                    <div class="textColor">可选</div>
+                </div>
+
+                <div class="mt20">
+                    <div class="mb10">打卡方式</div>
+                    <el-select v-model="group.content[contentIndex].children[stairIndex].children[secondIndex].alignment">
+                        <el-option v-for="item in openModeArr"
+                                   :key="item.value"
+                                   :value="item.value"
+                                   :label="item.label"></el-option>
+                    </el-select>
+                    <el-checkbox class="mt10"
+                                 v-model="group.content[contentIndex].children[stairIndex].children[secondIndex].showTag">显示标签</el-checkbox>
+
+                    <div class="themeColor mt20 hand">
+                        <i class="iconfont">&#xe74b;</i>
+                        删除内容
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 图片 -->
+        <div class="H100 content_edit_panel"
+             :style="{width:zIndexPanel > 4?'100%':'0px','z-index':'500'}">
+            <div class="header flex pl20">
+                <i @click="zIndexPanel=2"
+                   class="iconfont fs20">&#xe61e;</i>
+            </div>
+            <div class="operation-container"
+                 v-if="group.content[contentIndex] && group.content[contentIndex].children && group.content[contentIndex].children[stairIndex]">
+                <div>图片</div>
+                <div class="textCenter">
+                    <div class="image-picker-container">
+                        <div class="img-selected-box">
+                            <el-image :src="group.content[contentIndex].children[stairIndex].img"
+                                      class="img-by-select "></el-image>
+                        </div>
+                        <div class="edit-button">
+                            <span class="edit-item">更改</span>
+                            <span class="edit-item">删除</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt20">
+                    <div class="mb10">链接</div>
+                    <el-select placeholder="搜索或粘贴链接"
+                               filterable
+                               clearable
+                               v-model="group.content[contentIndex].children[stairIndex].link">
+                        <el-option :label="111"
+                                   :value="123"></el-option>
+                    </el-select>
+                    <div class="textColor">可选</div>
+                </div>
+                <div class="mt20">
+                    <div class="mb10">文本</div>
+                    <quill-editor class="ql-editors"
+                                  ref="myQuillEditor"
+                                  v-model="group.content[contentIndex].children[stairIndex].text"
+                                  :options="editorOption">
+                    </quill-editor>
+                </div>
+                <div class="mt10">
+                    <div class="ranger-container">
+                        <el-slider v-model="group.content[contentIndex].children[stairIndex].textFontSize"
+                                   :max="12"
+                                   :min="8"
+                                   class="W70 mr15"></el-slider>
+                        <el-input v-model="group.content[contentIndex].children[stairIndex].textFontSize"
+                                  size="mini"
+                                  class="w90">
+                            <template slot="prepend">H</template>
+                        </el-input>
+                    </div>
+                </div>
+                <div class="mt20">
+                    <div class="mb10">对齐方式</div>
+                    <el-select v-model="group.content[contentIndex].children[stairIndex].alignment">
+                        <el-option v-for="item in aligningArr"
+                                   :key="item.value"
+                                   :value="item.value"
+                                   :label="item.label"
+                                   v-show="item.value != 3"></el-option>
+                    </el-select>
+                </div>
+                <el-checkbox class="mt20"
+                             v-model="group.content[contentIndex].children[stairIndex]">展示装饰线条</el-checkbox>
+                <div class="themeColor mt20 hand">
+                    <i class="iconfont">&#xe74b;</i>
+                    删除内容
+                </div>
+            </div>
+        </div>
+        <!--菜单导航  -->
+        <div class="H100 content_edit_panel"
+             :style="{width:zIndexPanel > 5?'100%':'0px','z-index':'500'}">
+            <div class="header flex pl20">
+                <i @click="zIndexPanel=2"
+                   class="iconfont fs20">&#xe61e;</i>
+            </div>
+            <div class="operation-container">
+                <div class="mt10">
+                    <div class="mb10">菜单导航</div>
+                    <div class="collection">
+                        <el-button type="primary"
+                                   @click="zIndexPanel++">选择菜单</el-button>
+                    </div>
+                </div>
+                <div class="mt20">
+                    <div class="mb10">打开方式</div>
+                    <el-select v-model="group.content[contentIndex].openMode">
+                        <el-option v-for="item in openModeArr"
+                                   :key="item.value"
+                                   :value="item.value"
+                                   :label="item.label"></el-option>
+                    </el-select>
+                </div>
+                <div class="themeColor mt20 hand">
+                    <i class="iconfont">&#xe74b;</i>
+                    删除内容
+                </div>
+
+            </div>
+        </div>
+        <!-- 菜单导航信息 -->
+        <div class="menu_content_edit_panel"
+             :style="{height:zIndexPanel > 6?'100%':'0px','z-index':600}">
+          <div class="header end pr20">
+            <i class="iconfont fs20">&#xe85c;</i>
+          </div>
+        </div>
     </div>
 </template>
 <script>
+import { quillEditor } from "vue-quill-editor";
 export default {
+  components: {
+    "quill-editor": quillEditor,
+  },
   data() {
     return {
-      zIndexPanel: 1,
-      goMenu: false,
-      contentIndex: 1,
-      stairIndex: 1,
+      zIndexPanel: 7, //层级动画
+      contentIndex: 0, //内容Index
+      stairIndex: 0, //内容下第一级index
+      secondIndex: 0, //内容下第二级index
+      // group.content[contentIndex].children[stairIndex]
       group: {
         content: [
-          { title: "HOME" },
           {
             title: "NEW",
-            type: 1,
+            type: 1, //自定义菜单
             link: "",
             openMode: 1,
+            showTag: false,
             children: [
               {
-                title: "",
-                type: 1,
-                img: "",
-                link: "",
-                text: "",
-                textFontSize: 12,
-                alignment: 1,
-                trimStrip: true,
+                title: "", //标题
+                type: 1, //图标
+                img: "https://img01.yzcdn.cn/upload_files/2021/08/07/FkIL32Xjm2GDYIYW-w0SS0zPfpuH.png",
+                link: "", //跳转链接
+                text: "", //文本
+                textFontSize: 12, //字体大小
+                alignment: 1, //对齐方式
+                trimStrip: true, //装饰条
               },
               {
-                type: 2,
+                type: 2, //菜单
                 children: [
                   {
                     title: "",
@@ -359,7 +552,6 @@ export default {
               },
             ],
           },
-          { title: "121" },
         ],
         navType: 1, //导航类型:横向导航,侧边导航
         aligningType: 1, //对齐方式:左侧,居中
@@ -386,7 +578,11 @@ export default {
         threeFontSize: 11, //三级
         revealIcon: [], //显示搜索图标
       },
-
+      // 打开方式
+      openModeArr: [
+        { label: "当前页打开", value: 1 },
+        { label: "新窗口打开", value: 2 },
+      ],
       colorSet: [
         { label: "滑动前背景", value: "slideBg" },
         { label: "滑动前文字和图标", value: "slideContentColor" },
@@ -420,8 +616,89 @@ export default {
         { label: "居中", value: 2 },
         { label: "右侧", value: 3 },
       ],
+      linkArr: [{ label: "搜索" }],
       visible: false,
+      visible1: false,
+      // 富文本
+      editorOption: {
+        debug: "info",
+        placeholder: "",
+        readOnly: false,
+        theme: "snow",
+        modules: {
+          toolbar: [
+            ["bold", "italic"], // toggled buttons
+            ["link"],
+          ],
+        },
+      },
     };
+  },
+  mounted() {},
+  methods: {
+    cutPanel(level, index, item) {
+      this.zIndexPanel++;
+      if (level == 1) {
+        this.contentIndex = index;
+      } else if (level == 2) {
+        this.stairIndex = index;
+      } else if (level == 3) {
+        this.secondIndex = index;
+      }
+      if (item && item.type == 1) {
+        this.zIndexPanel = 5;
+      }
+    },
+    addMenu(type, index) {
+      if (type == 1) {
+        let info = {
+          title: "",
+          type: 2,
+          link: "",
+          openMode: 1,
+          showTag: false,
+        };
+        if (index == 1) {
+          this.group.content.push(info);
+        } else {
+          info.type = 1;
+          info.children = [];
+          this.group.content.push(info);
+        }
+        this.visible = false;
+      } else if (type == 2) {
+        console.info(type, index);
+        if (index == 2) {
+          this.group.content[this.contentIndex].children.push({
+            title: "", //标题
+            type: 1, //图标
+            img: "",
+            link: "", //跳转链接
+            text: "", //文本
+            textFontSize: 12, //字体大小
+            alignment: 1, //对齐方式
+            trimStrip: true, //装饰条
+          });
+        } else {
+          this.group.content[this.contentIndex].children.push({
+            type: 2, //菜单
+            children: [],
+          });
+        }
+        this.visible1 = false;
+      } else if (type == 3) {
+        this.group.content[this.contentIndex].children[
+          this.stairIndex
+        ].children.push({
+          title: "",
+          link: "",
+          alignment: 1,
+          showTag: false,
+          tagBgColor: "",
+          textColor: "",
+        });
+      }
+    },
   },
 };
 </script>
@@ -432,6 +709,25 @@ export default {
   right: 0;
   top: 0;
   transition: 0.3s;
+}
+.menu_content_edit_panel {
+  position: absolute;
+  width: 100%;
+  right: 0;
+  bottom: 0;
+  height: 0px;
+  transition: 0.3s;
+  background: #fff;
+  .header {
+    line-height: 64px;
+    background: #fff;
+    margin-bottom: 0 !important;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    color: #15161b;
+    border-bottom: 1px solid #f2f3f5;
+  }
 }
 .header {
   background: #fff;
@@ -462,14 +758,6 @@ export default {
     border-radius: 2px;
   }
 
-  .section-item {
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    height: 64px;
-    line-height: 64px;
-    cursor: pointer;
-  }
   .add-block-item {
     line-height: 64px;
     background: #fff;
@@ -493,14 +781,13 @@ export default {
     }
   }
 
-  .block-list {
-    .select-block-item {
-      cursor: pointer;
-      padding: 10px 20px;
-    }
-    .select-block-item:hover {
-      background: rgba(0, 0, 0, 0.1);
-    }
+  .section-item {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    height: 64px;
+    line-height: 64px;
+    cursor: pointer;
   }
 
   .logoTitle {
@@ -582,5 +869,34 @@ export default {
     font-size: 14px;
     line-height: 20px;
   }
+  .collection {
+    height: 136px;
+    background: rgba(185, 191, 201, 0.12);
+    border-radius: 2px 2px 0 0;
+    border: 1px solid #ebedf0;
+    text-align: center;
+    line-height: 136px;
+  }
+}
+
+.block-list {
+  .select-block-item {
+    cursor: pointer;
+    padding: 10px 20px;
+  }
+  .select-block-item:hover {
+    background: rgba(0, 0, 0, 0.1);
+  }
+}
+.ql-editors {
+  height: 170px;
+}
+.ql-toolbar.ql-snow {
+  background: #f7f8fa !important;
+  border: 1px solid #ebedf0 !important;
+}
+.ql-container.ql-snow {
+  border: 1px solid #ebedf0 !important;
+  height: 120px;
 }
 </style>

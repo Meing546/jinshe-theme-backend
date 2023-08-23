@@ -144,6 +144,7 @@ export default {
             isShow: false,
             prefix: false,
             iconfont: "\ue85a",
+            assembly:"PageNavigation"
           },
           {
             id: "003",

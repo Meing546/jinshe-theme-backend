@@ -1,40 +1,41 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-    <!-- <div :class="{'h5-preview-content':(adaptationIndex==2)}"> -->
-    <!-- :class="{'h5-preview-content':(adaptationIndex==2)}" -->
     <div class="browse-box ">
-        <!-- <div :class="{'h5-preview-content':(adaptationIndex==2)}"> -->
-            <div class="W100 relative">
-                <div v-for="(item,index) in pageArr"
-                     :key="index"
-                     @click="edit(item,index)"
-                     class="fJRcxb W100 absolute"
-                     :class="{'active':(curAssembly == item.assembly)}">
-                    <div v-show="curAssembly == item.assembly">
+        <div class="W100 ">
+            <div v-for="(item,index) in pageArr"
+                 :key="index"
+                 @click="edit(item,index)"
+                 class="fJRcxb W100 relative"
+                 :class="{'active':(curAssembly == item.assembly)}">
+                    <div v-show="curAssembly == item.assembly" >
                         <div class="wrapper-section-name">{{ item.title }}</div>
                         <div class="wrapper-section-operate white fs12"
-                             v-if="['PageNotice'].indexOf(item.assembly) == -1">
+                             v-if="['PageNotice','PageNavigation'].indexOf(item.assembly) == -1">
                             <div class="short-cut-item"><span class="iconfont">&#xe795;</span></div>
                             <div class="short-cut-item"><span class="iconfont roate180">&#xe795;</span></div>
                             <div class="short-cut-item"><span class="iconfont">&#xe622;</span></div>
                             <div class="short-cut-item"><span class="iconfont">&#xe74b;</span></div>
                         </div>
                     </div>
-
-                    <!-- 导航栏 -->
-                    <page-notice v-if="item.assembly == 'PageNotice'"
-                                 ref="myPageNotice"
-                                 :assembly="item"></page-notice>
-                </div>
+                <!-- 公告栏 -->
+                <page-notice v-if="item.assembly == 'PageNotice'"
+                             ref="myPageNotice"
+                             :assembly="item"></page-notice>
+                <!-- 导航栏 -->
+                <page-navigation v-if="item.assembly == 'PageNavigation'"
+                                 :assembly="item"></page-navigation>
             </div>
+        </div>
         <!-- </div> -->
     </div>
 </template>
 <script>
 import PageNotice from "../components/assembly/PageNotice.vue";
+import PageNavigation from "../components/assembly/PageNavigation.vue";
 export default {
   components: {
     "page-notice": PageNotice,
+    "page-navigation": PageNavigation,
   },
   data() {
     return {

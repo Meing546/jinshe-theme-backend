@@ -7,7 +7,8 @@
             <page-notice v-if="curAssembly == 'PageNotice'"
                          :assembly="pageContent.content"
                          @call="returnData"></page-notice>
-            <page-navigation v-else-if="curAssembly == 'PageNavigation'"></page-navigation>
+            <page-navigation
+                         :assembly="pageContent.content" v-else-if="curAssembly == 'PageNavigation'" @call="returnData"></page-navigation>
             <Intro v-else></Intro>
         </div>
         <!-- </div> -->
@@ -28,7 +29,7 @@ export default {
   data() {
     return {
       pageContent: {},
-      curAssembly: "PageNavigation",
+      curAssembly: "",
     };
   },
   created() {
@@ -41,7 +42,6 @@ export default {
 
   methods: {
     selectAssembly(res) {
-      console.info("打印传值-=-=-=", res);
       this.curAssembly = res.assembly;
       this.pageContent = res;
     },

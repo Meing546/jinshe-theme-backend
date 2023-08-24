@@ -8,7 +8,7 @@
             <li class="body-left">
                 <div :style="{'font-weight': '600',color:assemblyData.iconColor}"
                      v-if="assemblyData.phone && assemblyData.exhibitMedia.indexOf(2) != -1">
-                    <span class="iconfont ">&#xe655;</span>
+                    <span class="iconfont">&#xe655;</span>
                     <span>{{ assemblyData.phone }}</span>
                 </div>
             </li>
@@ -48,7 +48,7 @@ export default {
         this.assemblyData = newData.content
           ? JSON.parse(JSON.stringify(newData.content))
           : this.assemblyData;
-        console.info("打印-=-=-", newData);
+        console.info("打印2-=-=-", newData);
       },
     },
   },

@@ -180,7 +180,6 @@ export default {
   },
   mounted() {
     this.group = JSON.parse(JSON.stringify(this.assembly));
-    console.info("查看信息-=-=-", this.assembly);
   },
   methods: {},
 };

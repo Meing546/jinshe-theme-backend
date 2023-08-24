@@ -60,6 +60,7 @@ export default {
     },
     getPageArr(res) {
       this.pageArr = JSON.parse(JSON.stringify(res));
+
     },
     callPage(res) {
       if (res.assembly) {
@@ -67,6 +68,7 @@ export default {
           if (ele.assembly == res.assembly) ele.content = res.data;
         });
         this.pageArr = JSON.parse(JSON.stringify(this.pageArr));
+
       }
     },
   },

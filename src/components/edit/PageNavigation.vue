@@ -269,7 +269,7 @@
                               :src="item.img"
                               class="w20 h20"></el-image>
                     <span class="pl16 fs16"
-                          style="color:#15161b">{{ item.type==1?'图片':'菜单组'}}</span>
+                          style="color:#15161b">{{ item.title?item.title:item.type==1?'图片':'菜单组'}}</span>
                 </div>
                 <div class="borB">
                     <el-popover placement="bottom-end"
@@ -307,7 +307,10 @@
                         <div>链接</div>
                         <el-select class="mt10"
                                    v-model="group.content[contentIndex].link">
-                            <el-option></el-option>
+                            <el-option v-for="item in linkArr"
+                                       :key="item.value"
+                                       :label="item.label"
+                                       :value="item.value"></el-option>
                         </el-select>
                         <div class="textColor">可选</div>
                     </div>
@@ -322,7 +325,29 @@
                         </el-select>
                     </div>
                     <div>
+                        <!--  -->
                         <el-checkbox v-model="group.content[contentIndex].showTag">显示标签</el-checkbox>
+                        <div v-if="group.content[contentIndex].showTag">
+                            <div class="mt20">
+                                <div class="mb10">标签文字</div>
+                                <el-input v-model="group.content[contentIndex].tagText"></el-input>
+                            </div>
+
+                            <div class="mt10">
+                                <div class="left">标签背景颜色</div>
+                                <div class="end">
+                                    <el-color-picker v-model="group.content[contentIndex].tagBgColor"
+                                                     size="mini"></el-color-picker>
+                                </div>
+                            </div>
+                            <div class="mt10">
+                                <div class="left">标签文字</div>
+                                <div class="end">
+                                    <el-color-picker v-model="group.content[contentIndex].tagColor"
+                                                     size="mini"></el-color-picker>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="themeColor mt20 hand"
                          @click.stop="deleteOperateItem(1)">
@@ -355,6 +380,7 @@
                     <span class="pl16 fs16"
                           style="color:#15161b">{{ item.title?item.title:"菜单标题" }}</span>
                 </div>
+
                 <div class="borB">
                     <div class="add-block-item"
                          @click.stop="addMenu(3)">
@@ -363,6 +389,37 @@
                         </div>
                     </div>
                 </div>
+                <div class="mt20">
+                    <div class="mt1o">菜单标题</div>
+                    <el-input v-model="group.content[contentIndex].children[stairIndex].title"></el-input>
+                </div>
+                <div class="mt20">
+                    <div class="mb10">链接</div>
+                    <el-select placeholder="搜索或粘贴链接"
+                               filterable
+                               clearable
+                               v-model="group.content[contentIndex].children[stairIndex].link">
+
+                        <el-option v-for="item in linkArr"
+                                   :key="item.value"
+                                   :label="item.label"
+                                   :value="item.value"></el-option>
+                    </el-select>
+                    <div class="textColor">可选</div>
+                </div>
+                <div class="mt20">
+                    <div class="mb10">打开方式</div>
+
+                    <el-select v-model="group.content[contentIndex].children[stairIndex].openMode">
+                        <el-option v-for="item in openModeArr"
+                                   :key="item.value"
+                                   :value="item.value"
+                                   :label="item.label"></el-option>
+                    </el-select>
+
+                    <el-checkbox v-model="group.content[contentIndex].children[stairIndex].showTag">显示标签</el-checkbox>
+                </div>
+
                 <div class="themeColor mt20 hand"
                      @click.stop="deleteOperateItem(2)">
                     <i class="iconfont">&#xe74b;</i>
@@ -386,7 +443,11 @@
                 </div>
                 <div class="mt40">
                     <div class="mb10">链接</div>
-                    <el-select v-model="group.content[contentIndex].children[stairIndex].children[secondIndex].link"></el-select>
+                    <el-select v-model="group.content[contentIndex].children[stairIndex].children[secondIndex].link">
+                        <el-option v-for="item in linkArr"
+                                   :key="item.value"
+                                   :label="item.label"
+                                   :value="item.value"></el-option></el-select>
                     <div class="textColor">可选</div>
                 </div>
 
@@ -447,8 +508,11 @@
                                filterable
                                clearable
                                v-model="group.content[contentIndex].children[stairIndex].link">
-                        <el-option :label="111"
-                                   :value="123"></el-option>
+
+                        <el-option v-for="item in linkArr"
+                                   :key="item.value"
+                                   :label="item.label"
+                                   :value="item.value"></el-option>>
                     </el-select>
                     <div class="textColor">可选</div>
                 </div>
@@ -596,6 +660,22 @@ export default {
     "quill-editor": quillEditor,
     ImageList,
   },
+  props: {
+    assembly: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
+  },
+  watch: {
+    group: {
+      handler(newVal) {
+        this.$emit("call", newVal);
+      },
+      deep: true,
+    },
+  },
   data() {
     return {
       isImageList: false,
@@ -612,6 +692,9 @@ export default {
             link: "",
             openMode: 1,
             showTag: false,
+            tagText:'New',
+            tagBgColor:'#FF6500',
+            tagColor:'#ffffff',
             children: [
               {
                 title: "", //标题
@@ -625,6 +708,9 @@ export default {
               },
               {
                 type: 2, //菜单
+                title: "",
+                alignment: 1, //对齐方式
+                trimStrip: true, //装饰条
                 children: [
                   {
                     title: "",
@@ -706,7 +792,7 @@ export default {
         { label: "居中", value: 2 },
         { label: "右侧", value: 3 },
       ],
-      linkArr: [{ label: "搜索" }],
+      linkArr: [{ label: "搜索", value: "https://www.baidu.com" }],
       visible: false,
       visible1: false,
       imageType: "",
@@ -725,7 +811,10 @@ export default {
       },
     };
   },
-  mounted() {},
+  mounted() {
+    console.info("父组件值", this.assembly);
+    // this.group = JSON.parse(JSON.stringify(this.assembly));
+  },
   methods: {
     cutPanel(level, index, item) {
       console.info(item);
@@ -767,10 +856,13 @@ export default {
             antSize: 12, //字体大小
             alignment: 1, //对齐方式
             trimStrip: true, //装饰条
-            type:1,
+            type: 1,
           });
         } else {
           this.group.content[this.contentIndex].children.push({
+            title: "",
+            alignment: 1, //对齐方式
+            trimStrip: true, //装饰条
             type: 2, //菜单
             children: [],
           });

@@ -209,7 +209,7 @@ export default {
               stairFontSize: 11, //一级字号
               secondFontSize: 11, //二级字号
               threeFontSize: 11, //三级
-              revealIcon: [], //显示搜索图标
+              revealIcon: [1,2,3,4], //显示搜索图标
             },
           },
           {

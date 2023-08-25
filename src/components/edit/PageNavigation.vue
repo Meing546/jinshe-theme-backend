@@ -389,7 +389,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="mt20">
+                <!-- <div class="mt20">
                     <div class="mt1o">菜单标题</div>
                     <el-input v-model="group.content[contentIndex].children[stairIndex].title"></el-input>
                 </div>
@@ -418,7 +418,7 @@
                     </el-select>
 
                     <el-checkbox v-model="group.content[contentIndex].children[stairIndex].showTag">显示标签</el-checkbox>
-                </div>
+                </div> -->
 
                 <div class="themeColor mt20 hand"
                      @click.stop="deleteOperateItem(2)">
@@ -461,6 +461,28 @@
                     </el-select>
                     <el-checkbox class="mt10"
                                  v-model="group.content[contentIndex].children[stairIndex].children[secondIndex].showTag">显示标签</el-checkbox>
+
+                    <div v-if="group.content[contentIndex].children[stairIndex].children[secondIndex].showTag">
+                        <div class="mt20">
+                            <div class="mb10">标签文字</div>
+                            <el-input v-model="group.content[contentIndex].children[stairIndex].children[secondIndex].tagText"></el-input>
+                        </div>
+
+                        <div class="mt10">
+                            <div class="left">标签背景颜色</div>
+                            <div class="end">
+                                <el-color-picker v-model="group.content[contentIndex].children[stairIndex].children[secondIndex].tagBgColor"
+                                                 size="mini"></el-color-picker>
+                            </div>
+                        </div>
+                        <div class="mt10">
+                            <div class="left">标签文字</div>
+                            <div class="end">
+                                <el-color-picker v-model="group.content[contentIndex].children[stairIndex].children[secondIndex].tagColor"
+                                                 size="mini"></el-color-picker>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="themeColor mt20 hand"
                          @click.stop="deleteOperateItem(3)">
@@ -692,9 +714,9 @@ export default {
             link: "",
             openMode: 1,
             showTag: false,
-            tagText:'New',
-            tagBgColor:'#FF6500',
-            tagColor:'#ffffff',
+            tagText: "New",
+            tagBgColor: "#FF6500",
+            tagColor: "#ffffff",
             children: [
               {
                 title: "", //标题
@@ -717,8 +739,9 @@ export default {
                     link: "",
                     alignment: 1,
                     showTag: false,
-                    tagBgColor: "",
-                    textColor: "",
+                    tagText: "New",
+                    tagBgColor: "#FF6500",
+                    tagColor: "#ffffff",
                   },
                 ],
               },
@@ -736,14 +759,14 @@ export default {
         openMode: 1, //子菜单打开方式
         expansionStyle: 1, //H5展开图标样式
         mainMenuGap: 16, //主菜单宽度
-        menuGroups: 205, //菜单组宽度
+        menuGroups: 200, //菜单组宽度
         exhibit: [], //子菜单自适应内容宽度,上滑消失下滑出现
         bgColor: "", //背景色
         contentColor: "", //文字与图标颜色
         lucencyBg: false, //透明背景色
         slideBg: "", //滑动前背景颜色
         slideContentColor: "", //滑动前文字颜色
-        submenuBg: "", //子菜单背景
+        submenuBg: "#ffffff", //子菜单背景
         submenuContentColor: "", //子菜单文字
         stairFontSize: 11, //一级字号
         secondFontSize: 11, //二级字号
@@ -876,8 +899,9 @@ export default {
           link: "",
           alignment: 1,
           showTag: false,
-          tagBgColor: "",
-          textColor: "",
+          tagText: "New",
+          tagBgColor: "#FF6500",
+          tagColor: "#ffffff",
         });
       }
     },

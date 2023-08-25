@@ -1,9 +1,18 @@
 <!-- eslint-disable vue/no-parsing-error -->
 <template>
-
-    <div class="section-header ">
+    <div class="section-header "
+         :style="{background:assemblyData.bgColor}">
+        <!-- menu-of-mobile -->
         <div class="sub-header-container ">
             <div class="wrapper">
+                <!-- 移动版 -->
+                <div class="menu-of-mobile">
+                  <div class="W100">
+                    <div class="p0 ml10">
+
+                    </div>
+                  </div>
+                </div>
                 <div class="mt8">
                     <a href="">
                         <img class="logoImage"
@@ -11,24 +20,28 @@
                     </a>
                 </div>
                 <div :class="'menu-list-wrapper'">
-                    <div class="menu-list">
+                    <div class="menu-list"
+                         :style="{ 'justify-content':(assemblyData.mainMenu == 1?'start':assemblyData.mainMenu==2?'center':'end')}">
                         <div v-for="(item,index) in assemblyData.content"
+                             :style="{padding:'0px '+assemblyData.mainMenuGap+'px'}"
                              :key="index">
                             <div class="first-menu-item-wrapper"
                                  v-if="item.title">
                                 <div class="first-menu-item">
                                     <a :href="item.link"
-                                       class="relative">
+                                       class="relative"
+                                       :style="{color:assemblyData.contentColor}">
                                         {{item.title}}
                                         <div class="header-badge"
                                              :style="{color:item.tagColor,background:item.tagBgColor}"
                                              v-if="item.showTag">{{item.tagText}}</div>
                                     </a>
                                 </div>
+                                <!-- background: rgb(255, 255, 255); -->
                                 <div class="pc-sub-menu center active">
-                                    <div style="background: rgb(255, 255, 255);"
+                                    <div :style="{background:assemblyData.submenuBg}"
                                          class="header-sub-menu-container first-level-header-sub-menu">
-                                        <div class="w200"
+                                        <div :style="{width:assemblyData.menuGroups+'px'}"
                                              v-for="(_item,_index) in item.children"
                                              :key="_index">
                                             <div v-if="_item.type == 1">
@@ -36,11 +49,13 @@
                                                    class="header-menu-item-text">
                                                     <img :src="_item.img"
                                                          class="header-menu-item-image" />
-                                                    <div class="first-level-menu">
+                                                    <div class="first-level-menu"
+                                                         :style="{'text-align':(_item.alignment==2?'center':'')}">
                                                         <span v-html="_item.text"
-                                                              class="decorative-style"
-                                                              :style="{'text-align:center':(_item.alignment==2),'border-bottom: none':(!_item.trimStrip)}">
+                                                              :style="{'border-bottom':(!_item.trimStrip?'none':''),color:assemblyData.submenuContentColor}"
+                                                              class="decorative-style h40">
                                                         </span>
+                                                        <!--  :style="{color:assemblyData.submenuContentColor}" -->
                                                     </div>
                                                 </a>
                                             </div>
@@ -48,7 +63,15 @@
                                                 <div v-for="(ele,inx) in _item.children"
                                                      :class="{'mt16':inx!=0}"
                                                      :key="_index+'_'+inx">
-                                                      <div></div>
+                                                    <div class="header-sub-menu-box">
+                                                        <a :href="ele.link"
+                                                           :style="{color:assemblyData.submenuContentColor}"
+                                                           class="relative">{{ ele.title }}
+                                                            <div class="header-badge"
+                                                                 :style="{color:ele.tagColor,background:ele.tagBgColor}"
+                                                                 v-if="ele.showTag">{{ele.tagText}}</div>
+                                                        </a>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -59,8 +82,11 @@
                     </div>
                 </div>
                 <div class="eDpfeW">
-                    <div class="header-icon-container"><i class="iconfont header-icon">&#xe601;</i></div>
-                    <div class="header-icon-container">
+                    <div class="header-icon-container"
+                         v-if="assemblyData.revealIcon.indexOf(1) != -1"><i :style="{color:assemblyData.contentColor}"
+                           class="iconfont header-icon">&#xe601;</i></div>
+                    <div class="header-icon-container"
+                         v-if="assemblyData.revealIcon.indexOf(2) != -1">
                         <el-popover placement="bottom"
                                     popper-class="customPopper"
                                     width="40"
@@ -70,12 +96,17 @@
                                 <div>我的优惠券</div>
                                 <div>消息通知</div>
                             </div>
-                            <i class="iconfont header-icon"
+                            <i :style="{color:assemblyData.contentColor}"
+                               class="iconfont header-icon"
                                slot="reference">&#xe612;</i>
                         </el-popover>
                     </div>
-                    <div class="header-icon-container"><i class="iconfont header-icon">&#xe66f;</i></div>
-                    <div class="header-icon-container"><i class="iconfont header-icon">&#xe604;</i></div>
+                    <div class="header-icon-container"
+                         v-if="assemblyData.revealIcon.indexOf(3) != -1"><i :style="{color:assemblyData.contentColor}"
+                           class="iconfont header-icon">&#xe66f;</i></div>
+                    <div class="header-icon-container"
+                         v-if="assemblyData.revealIcon.indexOf(4) != -1"> <i :style="{color:assemblyData.contentColor}"
+                           class="iconfont header-icon">&#xe604;</i></div>
                 </div>
             </div>
         </div>
@@ -98,7 +129,6 @@ export default {
         this.assemblyData = newData.content
           ? JSON.parse(JSON.stringify(newData.content))
           : this.assemblyData;
-        console.info("导航栏打印更新-=-=-", this.assemblyData);
       },
     },
   },
@@ -135,6 +165,10 @@ export default {
       -webkit-box-align: center;
       align-items: center;
       height: 100%;
+      // 移动样式
+      .menu-of-mobile {
+        display: block;
+      }
       .logoImage {
         max-height: 44px !important;
       }
@@ -163,6 +197,20 @@ export default {
             flex-shrink: 0;
             -webkit-box-align: center;
             align-items: center;
+
+            .header-badge {
+              position: absolute;
+              top: -10px;
+              right: 0px;
+              transform: translateX(100%);
+              width: max-content;
+              pointer-events: none;
+              display: inline-block;
+              line-height: 1;
+              padding: 2px 4px;
+              font-size: 11px;
+              border-radius: 8px;
+            }
             .first-menu-item {
               font-size: 14px;
               // line-height: 20px;
@@ -175,19 +223,6 @@ export default {
               cursor: pointer;
               margin-top: 3px;
               line-height: 60px;
-              .header-badge {
-                position: absolute;
-                top: -10px;
-                right: 0px;
-                transform: translateX(100%);
-                width: max-content;
-                pointer-events: none;
-                display: inline-block;
-                line-height: 1;
-                padding: 2px 4px;
-                font-size: 11px;
-                border-radius: 8px;
-              }
             }
             .pc-sub-menu {
               max-height: 0px;
@@ -211,11 +246,11 @@ export default {
                 top: calc(100% + 1px);
               }
             }
-            .first-menu-item:hover + .pc-sub-menu {
+            .first-menu-item + .pc-sub-menu {
               opacity: 1;
               .header-sub-menu-container {
                 padding: 40px !important;
-                background-color: aqua;
+                // background-color: aqua;
                 .header-menu-item-text {
                   display: block;
                   width: 100%;
@@ -237,8 +272,22 @@ export default {
                       width: auto;
                       border-bottom: 1px solid rgb(68, 68, 68);
                       align-items: center;
+                      p {
+                        margin-bottom: 2px !important;
+                      }
                     }
                   }
+                }
+                .header-sub-menu-box {
+                  margin-left: 0px !important;
+                  padding: 0px;
+                  cursor: pointer;
+                  box-sizing: border-box;
+                  max-width: 27.7778vw;
+                  word-break: break-word;
+                  font-size: 14px;
+                  line-height: 20px;
+                  font-weight: 400;
                 }
               }
             }

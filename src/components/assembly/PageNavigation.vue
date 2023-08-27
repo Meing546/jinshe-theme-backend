@@ -1,76 +1,72 @@
 <!-- eslint-disable vue/no-parsing-error -->
 <template>
-    <div class="section-header "
-         :style="{background:assemblyData.bgColor}">
-        <!-- menu-of-mobile -->
-        <div class="sub-header-container ">
-            <div class="wrapper">
-                <!-- 移动版 -->
-                <div class="menu-of-mobile">
-                  <div class="W100">
-                    <div class="p0 ml10">
-
+    <div>
+        <div class="section-header "
+             v-if="false"
+             :style="{background:assemblyData.bgColor}">
+            <!-- menu-of-mobile -->
+            <!-- pc -->
+            <div class="sub-header-container">
+                <div class="wrapper">
+                    <div class="mt8">
+                        <a href="">
+                            <img class="logoImage"
+                                 :src="assemblyData.logoImage">
+                        </a>
                     </div>
-                  </div>
-                </div>
-                <div class="mt8">
-                    <a href="">
-                        <img class="logoImage"
-                             :src="assemblyData.logoImage">
-                    </a>
-                </div>
-                <div :class="'menu-list-wrapper'">
-                    <div class="menu-list"
-                         :style="{ 'justify-content':(assemblyData.mainMenu == 1?'start':assemblyData.mainMenu==2?'center':'end')}">
-                        <div v-for="(item,index) in assemblyData.content"
-                             :style="{padding:'0px '+assemblyData.mainMenuGap+'px'}"
-                             :key="index">
-                            <div class="first-menu-item-wrapper"
-                                 v-if="item.title">
-                                <div class="first-menu-item">
-                                    <a :href="item.link"
-                                       class="relative"
-                                       :style="{color:assemblyData.contentColor}">
-                                        {{item.title}}
-                                        <div class="header-badge"
-                                             :style="{color:item.tagColor,background:item.tagBgColor}"
-                                             v-if="item.showTag">{{item.tagText}}</div>
-                                    </a>
-                                </div>
-                                <!-- background: rgb(255, 255, 255); -->
-                                <div class="pc-sub-menu center active">
-                                    <div :style="{background:assemblyData.submenuBg}"
-                                         class="header-sub-menu-container first-level-header-sub-menu">
-                                        <div :style="{width:assemblyData.menuGroups+'px'}"
-                                             v-for="(_item,_index) in item.children"
-                                             :key="_index">
-                                            <div v-if="_item.type == 1">
-                                                <a :href="_item.link"
-                                                   class="header-menu-item-text">
-                                                    <img :src="_item.img"
-                                                         class="header-menu-item-image" />
-                                                    <div class="first-level-menu"
-                                                         :style="{'text-align':(_item.alignment==2?'center':'')}">
-                                                        <span v-html="_item.text"
-                                                              :style="{'border-bottom':(!_item.trimStrip?'none':''),color:assemblyData.submenuContentColor}"
-                                                              class="decorative-style h40">
-                                                        </span>
-                                                        <!--  :style="{color:assemblyData.submenuContentColor}" -->
-                                                    </div>
-                                                </a>
-                                            </div>
-                                            <div v-else>
-                                                <div v-for="(ele,inx) in _item.children"
-                                                     :class="{'mt16':inx!=0}"
-                                                     :key="_index+'_'+inx">
-                                                    <div class="header-sub-menu-box">
-                                                        <a :href="ele.link"
-                                                           :style="{color:assemblyData.submenuContentColor}"
-                                                           class="relative">{{ ele.title }}
-                                                            <div class="header-badge"
-                                                                 :style="{color:ele.tagColor,background:ele.tagBgColor}"
-                                                                 v-if="ele.showTag">{{ele.tagText}}</div>
-                                                        </a>
+                    <div :class="'menu-list-wrapper'">
+                        <div class="menu-list"
+                             :style="{ 'justify-content':(assemblyData.mainMenu == 1?'start':assemblyData.mainMenu==2?'center':'end')}">
+                            <div v-for="(item,index) in assemblyData.content"
+                                 :style="{padding:'0px '+assemblyData.mainMenuGap+'px'}"
+                                 :key="index">
+                                <div class="first-menu-item-wrapper"
+                                     v-if="item.title">
+                                    <div class="first-menu-item">
+                                        <a :href="item.link"
+                                           class="relative"
+                                           :style="{color:assemblyData.contentColor}">
+                                            {{item.title}}
+                                            <div class="header-badge"
+                                                 :style="{color:item.tagColor,background:item.tagBgColor}"
+                                                 v-if="item.showTag">{{item.tagText}}</div>
+                                        </a>
+                                    </div>
+                                    <!-- background: rgb(255, 255, 255); -->
+                                    <div class="pc-sub-menu center active">
+                                        <div :style="{background:assemblyData.submenuBg}"
+                                             class="header-sub-menu-container first-level-header-sub-menu">
+                                            <div :style="{width:assemblyData.menuGroups+'px'}"
+                                                 v-for="(_item,_index) in item.children"
+                                                 :key="_index">
+                                                <div v-if="_item.type == 1">
+                                                    <a :href="_item.link"
+                                                       class="header-menu-item-text">
+                                                        <img :src="_item.img"
+                                                             class="header-menu-item-image" />
+                                                        <div class="first-level-menu"
+                                                             :style="{'text-align':(_item.alignment==2?'center':'')}">
+                                                            <span v-html="_item.text"
+                                                                  :style="{'border-bottom':(!_item.trimStrip?'none':''),color:assemblyData.submenuContentColor}"
+                                                                  class="decorative-style h40">
+                                                            </span>
+                                                            <!--  :style="{color:assemblyData.submenuContentColor}" -->
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div v-else>
+                                                    <div v-for="(ele,inx) in _item.children"
+                                                         :class="{'mt16':inx!=0}"
+                                                         :key="_index+'_'+inx">
+                                                        <div class="header-sub-menu-box">
+                                                            <a :href="ele.link"
+                                                               :style="{color:assemblyData.submenuContentColor}"
+                                                               class="relative">{{ ele.title }}
+                                                                <div class="header-badge"
+                                                                     :style="{color:ele.tagColor,background:ele.tagBgColor}"
+                                                                     v-if="ele.showTag">{{ele.tagText}}</div>
+                                                            </a>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -80,38 +76,82 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="eDpfeW">
-                    <div class="header-icon-container"
-                         v-if="assemblyData.revealIcon.indexOf(1) != -1"><i :style="{color:assemblyData.contentColor}"
-                           class="iconfont header-icon">&#xe601;</i></div>
-                    <div class="header-icon-container"
-                         v-if="assemblyData.revealIcon.indexOf(2) != -1">
-                        <el-popover placement="bottom"
-                                    popper-class="customPopper"
-                                    width="40"
-                                    trigger="hover">
-                            <div class="personal">
-                                <div>我的账户</div>
-                                <div>我的优惠券</div>
-                                <div>消息通知</div>
-                            </div>
-                            <i :style="{color:assemblyData.contentColor}"
-                               class="iconfont header-icon"
-                               slot="reference">&#xe612;</i>
-                        </el-popover>
+                    <div class="eDpfeW">
+                        <div class="header-icon-container"
+                             v-if="assemblyData.revealIcon.indexOf(1) != -1"><i :style="{color:assemblyData.contentColor}"
+                               class="iconfont header-icon">&#xe601;</i></div>
+                        <div class="header-icon-container"
+                             v-if="assemblyData.revealIcon.indexOf(2) != -1">
+                            <el-popover placement="bottom"
+                                        popper-class="customPopper"
+                                        width="40"
+                                        trigger="hover">
+                                <div class="personal">
+                                    <div>我的账户</div>
+                                    <div>我的优惠券</div>
+                                    <div>消息通知</div>
+                                </div>
+                                <i :style="{color:assemblyData.contentColor}"
+                                   class="iconfont header-icon"
+                                   slot="reference">&#xe612;</i>
+                            </el-popover>
+                        </div>
+                        <div class="header-icon-container"
+                             v-if="assemblyData.revealIcon.indexOf(3) != -1"><i :style="{color:assemblyData.contentColor}"
+                               class="iconfont header-icon">&#xe66f;</i></div>
+                        <div class="header-icon-container"
+                             v-if="assemblyData.revealIcon.indexOf(4) != -1"> <i :style="{color:assemblyData.contentColor}"
+                               class="iconfont header-icon">&#xe604;</i></div>
                     </div>
-                    <div class="header-icon-container"
-                         v-if="assemblyData.revealIcon.indexOf(3) != -1"><i :style="{color:assemblyData.contentColor}"
-                           class="iconfont header-icon">&#xe66f;</i></div>
-                    <div class="header-icon-container"
-                         v-if="assemblyData.revealIcon.indexOf(4) != -1"> <i :style="{color:assemblyData.contentColor}"
-                           class="iconfont header-icon">&#xe604;</i></div>
+                </div>
+            </div>
+        </div>
+        <!-- 移动 -->
+        <div class="mobile-box"
+             :style="{background:assemblyData.bgColor}">
+            <div class="sub-header-container-mobile">
+                <div class=" wrapper start">
+                    <div>
+                        <div class="menu-of-mobile">
+                            <i class="iconfont">&#xe648;</i>
+                        </div>
+                        <div class="slide">
+                            <div class="slide-container">
+                                <div class="slide-container-header">
+                                    <i class="iconfont">&#xe85c;</i>
+                                </div>
+                                <div class="slide-left-scroll-body"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <a href="">
+                            <img class="logoImage"
+                                 :src="assemblyData.logoImage">
+                        </a>
+                    </div>
+                    <div class="jUrgfb">
+                        <i class="iconfont fs24">&#xe601;</i>
+                        <el-popover placement="bottom"
+                                    trigger="hover">
+                            <div class="mr20">
+                                <div class="borB pb10 pt10 hand"
+                                     v-for="(item,index) in iconArr"
+                                     :key="index"
+                                     v-show="index!=0">
+                                    <i class="iconfont fs24">{{ item.value }}</i>
+                                    <span class="ml10">{{ item.label }}</span>
+                                </div>
+                            </div>
+                            <i class="iconfont fs30"
+                               slot="reference">&#xe719;</i>
+                        </el-popover>
+
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
 </template>
 <script>
 export default {
@@ -135,6 +175,12 @@ export default {
   data() {
     return {
       assemblyData: {},
+      iconArr: [
+        { label: "搜索", value: "\ue601" },
+        { label: "账号", value: "\ue612" },
+        { label: "心愿单", value: "\ue66f" },
+        { label: "购物车", value: "\ue604" },
+      ],
     };
   },
   mounted() {
@@ -148,7 +194,6 @@ export default {
 
 <style lang="scss" scoped>
 .section-header {
-  background: rgb(255, 246, 247);
   height: 80px;
   z-index: initial;
   .sub-header-container {
@@ -165,10 +210,6 @@ export default {
       -webkit-box-align: center;
       align-items: center;
       height: 100%;
-      // 移动样式
-      .menu-of-mobile {
-        display: block;
-      }
       .logoImage {
         max-height: 44px !important;
       }
@@ -318,10 +359,90 @@ export default {
     }
   }
 }
+
+// 移动
+.mobile-box {
+  background: rgb(255, 246, 247);
+  .sub-header-container-mobile {
+    padding: 15px;
+    position: relative;
+    .wrapper {
+      font-size: 0px;
+      display: flex;
+      box-sizing: border-box;
+      -webkit-box-pack: center;
+      justify-content: center;
+      -webkit-box-align: center;
+      align-items: center;
+    }
+    .menu-of-mobile {
+      padding: 0px;
+      margin-right: 10px;
+      // .mobile-header-mask {
+      //   position: fixed;
+      //   left: 0px;
+      //   top: 0px;
+      //   width: 100vw;
+      //   height: 100%;
+      //   z-index: 10;
+      //   background: rgba(26, 26, 27, 0.3);
+      //   opacity: 0.3;
+      // }
+
+      // text-align: right;
+    }
+    .slide {
+      top: 0px;
+      z-index: 600;
+      left: 0px;
+      width: 300px;
+      height: 100vh;
+      position: fixed;
+      transition: all 0.2s ease-in-out 0s;
+      // transform: translateX(-300px);
+      transform: translateX(0%);
+      overflow: hidden;
+      .slide-container {
+        background: rgb(255, 255, 255) !important;
+        color: rgb(68, 68, 68) !important;
+        height: 100%;
+        .slide-container-header {
+          line-height: 1;
+          padding-bottom: 16px;
+          border-bottom: 0px !important;
+          text-align: right;
+          padding: 0 18px 0;
+          box-shadow: rgb(209, 213, 219) 0px 0px 0px 0px;
+          display: flex;
+          -webkit-box-pack: end;
+          justify-content: flex-end;
+        }
+      }
+    }
+    .logoImage {
+      max-width: 200px;
+      max-height: 24px;
+      display: block;
+    }
+    .jUrgfb {
+      flex: 1 1 0%;
+      font-size: 20px;
+      display: flex;
+      -webkit-box-pack: end;
+      justify-content: flex-end;
+    }
+  }
+}
+
 @media screen and (min-width: 768px) {
-  // .section-header {
-  //   min-height: 0px !important;
-  // }
+  .section-header {
+    min-height: 0px !important;
+    .logoImage {
+      max-width: 200px;
+      max-height: 24px;
+      display: block;
+    }
+  }
 }
 </style>
 <style lang="scss">

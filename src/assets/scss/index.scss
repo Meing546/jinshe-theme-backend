@@ -54,6 +54,10 @@
     display: flex;
     justify-content: center;
 }
+.start {
+    display: flex;
+    justify-content: start !important;
+}
 .relative{position: relative;}
 .absolute{position: absolute;}
 .hand:hover{cursor: pointer;}

@@ -26,6 +26,7 @@
                                  :assembly="item"></page-navigation>
             </div>
         </div>
+
         <!-- </div> -->
     </div>
 </template>
@@ -45,6 +46,7 @@ export default {
     };
   },
   mounted() {
+    this.pageArr = this.$store.state.sub_menu_temp[0];
     this.$bus.$on("adaptationIndex", (index) => {
       this.adaptationIndex = index;
     });
@@ -88,8 +90,8 @@ export default {
   -webkit-box-flex: 1;
   flex: 1;
   z-index: 0;
-  margin: 0 20px;
-  margin-top: 12px;
+  // margin: 0 20px;
+  // margin-top: 12px;
   position: relative;
   box-sizing: border-box;
   .fJRcxb {

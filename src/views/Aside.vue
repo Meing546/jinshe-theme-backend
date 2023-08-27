@@ -291,7 +291,6 @@ export default {
         this.sub_menu_index = this.sub_menu_id == -1 ? 0 : data.index;
         if (this.menu_id == 0) {
           this.menu_id = -1;
-          // this.$bus.$emit("selectAssembly", this.sub_menu_temp[0][data.index]);
           this.$emit("selectAssembly", {
             type: "Aside",
             data: this.sub_menu_temp[0][data.index],

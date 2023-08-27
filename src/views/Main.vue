@@ -9,8 +9,9 @@
                      @pageArr="getPageArr"
                      @selectAssembly="selectAssembly"></v-aside>
 
-            <v-browse ref="myBrowse"
-                      @selectAssembly="selectAssembly"></v-browse>
+            <!-- <v-browse ref="myBrowse"
+                      @selectAssembly="selectAssembly"></v-browse> -->
+            <v-shell ref="myShell" @selectAssembly="selectAssembly"></v-shell>
 
             <v-offside ref="myOffside"
                        @callPage="callPage"></v-offside>
@@ -22,30 +23,31 @@
 <script>
 import Header from "./Header.vue";
 import Aside from "./Aside.vue";
-import Browse from "./Browse.vue";
+// import Browse from "./Browse.vue";
+import Shell from "./Shell.vue";
 import Offside from "./Offside.vue";
 export default {
   components: {
     "v-header": Header,
     "v-aside": Aside,
     "v-offside": Offside,
-    "v-browse": Browse,
+    "v-shell": Shell,
+    // "v-browse": Browse,
   },
   data() {
     return {};
   },
   methods: {
     getPageArr(res) {
-      this.$refs.myBrowse.getPageArr(res);
+      // this.$refs.myBrowse.getPageArr(res);
       this.$refs.myOffside.getPageArr(res);
     },
     callPage(res) {
-      console.info("获取到-=-", res);
       this.$refs.myBrowse.callPage(res);
     },
     selectAssembly(res) {
       if (res.type == "Aside") {
-        this.$refs.myBrowse.selectAssembly(res.data);
+        // this.$refs.myShell.selectAssembly(res.data);
       }
       this.$refs.myOffside.selectAssembly(res.data);
     },

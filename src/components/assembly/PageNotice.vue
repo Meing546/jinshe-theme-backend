@@ -48,7 +48,6 @@ export default {
         this.assemblyData = newData.content
           ? JSON.parse(JSON.stringify(newData.content))
           : this.assemblyData;
-        console.info("打印2-=-=-", newData);
       },
     },
   },

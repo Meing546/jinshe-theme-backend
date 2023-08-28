@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "5387532",
+      "name": "减号",
+      "font_class": "jianhao",
+      "unicode": "eaf5",
+      "unicode_decimal": 60149
+    },
+    {
+      "icon_id": "9568045",
+      "name": "向上",
+      "font_class": "xiangshang",
+      "unicode": "e645",
+      "unicode_decimal": 58949
+    },
+    {
       "icon_id": "3538385",
       "name": "更多",
       "font_class": "gengduo",

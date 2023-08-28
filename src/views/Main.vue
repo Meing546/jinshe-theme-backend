@@ -43,12 +43,12 @@ export default {
       this.$refs.myOffside.getPageArr(res);
     },
     callPage(res) {
-      this.$refs.myBrowse.callPage(res);
+      this.$refs.myShell.callPage(res);
     },
     selectAssembly(res) {
-      if (res.type == "Aside") {
+      // if (res.type == "Aside") {
         // this.$refs.myShell.selectAssembly(res.data);
-      }
+      // }
       this.$refs.myOffside.selectAssembly(res.data);
     },
   },

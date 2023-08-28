@@ -1,14 +1,17 @@
 <!-- eslint-disable vue/no-parsing-error -->
 <template>
-    <div>
+    <div class="PageNavigation_box">
         <div class="section-header "
-             v-if="false"
              :style="{background:assemblyData.bgColor}">
             <!-- menu-of-mobile -->
             <!-- pc -->
             <div class="sub-header-container">
                 <div class="wrapper">
                     <div class="mt8">
+                        <i v-if="assemblyData.navType==2"
+                           class="iconfont mr40 relative fs24"
+                           style="top:-4px"
+                           @click="isSlide=!isSlide">&#xe648;</i>
                         <a href="">
                             <img class="logoImage"
                                  :src="assemblyData.logoImage">
@@ -16,6 +19,7 @@
                     </div>
                     <div :class="'menu-list-wrapper'">
                         <div class="menu-list"
+                             v-if="assemblyData.navType == 1"
                              :style="{ 'justify-content':(assemblyData.mainMenu == 1?'start':assemblyData.mainMenu==2?'center':'end')}">
                             <div v-for="(item,index) in assemblyData.content"
                                  :style="{padding:'0px '+assemblyData.mainMenuGap+'px'}"
@@ -32,7 +36,6 @@
                                                  v-if="item.showTag">{{item.tagText}}</div>
                                         </a>
                                     </div>
-                                    <!-- background: rgb(255, 255, 255); -->
                                     <div class="pc-sub-menu center active">
                                         <div :style="{background:assemblyData.submenuBg}"
                                              class="header-sub-menu-container first-level-header-sub-menu">
@@ -113,15 +116,10 @@
                 <div class=" wrapper start">
                     <div>
                         <div class="menu-of-mobile">
-                            <i class="iconfont">&#xe648;</i>
-                        </div>
-                        <div class="slide">
-                            <div class="slide-container">
-                                <div class="slide-container-header">
-                                    <i class="iconfont">&#xe85c;</i>
-                                </div>
-                                <div class="slide-left-scroll-body"></div>
-                            </div>
+                            <i class="iconfont"
+                               @click="isSlide=!isSlide">&#xe648;</i>
+                            <div v-if="isSlide"
+                                 class="mobile-header-mask"></div>
                         </div>
                     </div>
                     <div>
@@ -151,10 +149,88 @@
                 </div>
             </div>
         </div>
+        <!-- 侧面 -->
+        <div class="slide"
+             :style="{transform: isSlide?'translateX(0%)':'translateX(-300px)'}">
+            <div class="slide-container  ptb10">
+                <div class="slide-container-header">
+                    <i class="iconfont fs30"
+                       @click="isSlide=!isSlide">&#xe85c;</i>
+                </div>
+                <div class="slide-left-scroll-body">
+                    <div class="side-slide-left-scroll-content">
+                        <div class="menu-container">
+                            <div v-for="(item,index) in assemblyData.content"
+                                 :key="index"
+                                 class="hand menu-level-one first-menu-title p20"
+                                 :class="{'sub-menu':(item.children)}">
+
+                                <span v-if="!item.children"
+                                      class="first-menu-title-text">{{ item.title }}</span>
+                                <div v-else>
+                                    <div class="sub-menu-title-container"
+                                         @click="isSpread=!isSpread">
+                                        <div class="sub-menu-title">
+                                            <span class="sub-menu-title-text">{{ item.title }}</span>
+                                        </div>
+                                        <div class="sub-menu-icon"
+                                             :style="{transform: isSpread?'rotate(180deg)':'rotate(90deg)'}">
+                                            <i class="iconfont">&#xe645;</i>
+                                        </div>
+                                    </div>
+                                    <div class="sub-menu-container mt20"
+                                         :style="{height:isSpread?'auto':'0'}">
+
+                                        <div v-for="(_item,_index) in item.children"
+                                             :key="index+'_'+_index">
+                                            <div v-if="_item.type == 1">
+                                                <a :href="_item.link">
+                                                    <img class="menu-image-item-image"
+                                                         :src="_item.img" />
+                                                    <div class="first-level-menu"
+                                                         :style="{'text-align':(_item.alignment==2?'center':'')}">
+                                                        <span v-html="_item.text"
+                                                              :style="{'border-bottom':(!_item.trimStrip?'none':''),color:assemblyData.submenuContentColor}"
+                                                              class="decorative-style h40">
+                                                        </span>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div v-else>
+                                                <div v-for="(ele,inx) in _item.children"
+                                                     :class="{'mt16':inx!=0}"
+                                                     :key="_index+'_'+inx">
+                                                    <div class="header-sub-menu-box">
+                                                        <a :href="ele.link"
+                                                           :style="{color:assemblyData.submenuContentColor}"
+                                                           class="relative">{{ ele.title }}
+                                                            <div class="header-badge"
+                                                                 :style="{color:ele.tagColor,background:ele.tagBgColor}"
+                                                                 v-if="ele.showTag">{{ele.tagText}}</div>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <v-registration></v-registration>
     </div>
 </template>
 <script>
+import Registration from "../Registration.vue";
 export default {
+  components: {
+    "v-registration": Registration,
+  },
   props: {
     assembly: {
       type: Object,
@@ -181,10 +257,11 @@ export default {
         { label: "心愿单", value: "\ue66f" },
         { label: "购物车", value: "\ue604" },
       ],
+      isSpread: false,
+      isSlide: false,
     };
   },
   mounted() {
-    console.info("导航栏=-=-=", this.assembly);
     this.assemblyData = JSON.parse(JSON.stringify(this.assembly.content));
   },
   methods: {},
@@ -193,102 +270,107 @@ export default {
 
 
 <style lang="scss" scoped>
-.section-header {
-  height: 80px;
-  z-index: initial;
-  .sub-header-container {
-    position: relative;
-    box-sizing: border-box;
+.PageNavigation_box {
+  .section-header {
     height: 80px;
-    color: rgba(0, 0, 0, 1);
-    padding: 0px 80px;
-    .wrapper {
-      display: flex;
+    z-index: initial;
+    .sub-header-container {
+      position: relative;
       box-sizing: border-box;
-      -webkit-box-pack: center;
-      justify-content: center;
-      -webkit-box-align: center;
-      align-items: center;
-      height: 100%;
-      .logoImage {
-        max-height: 44px !important;
-      }
-      .menu-list-wrapper {
-        flex: 1 1 0%;
-        position: relative;
-        padding: 0px 24px;
+      height: 80px;
+      color: rgba(0, 0, 0, 1);
+      padding: 0px 80px;
+      .wrapper {
+        display: flex;
         box-sizing: border-box;
+        -webkit-box-pack: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        align-items: center;
         height: 100%;
-        .menu-list {
-          display: flex;
-          flex-wrap: nowrap;
-          padding: 8px 0px;
-          width: 100%;
-          // overflow: scroll hidden;
-          -webkit-box-pack: center;
-          justify-content: center;
-          -webkit-box-align: center;
-          align-items: center;
-          height: 100%;
-          box-sizing: border-box;
+        .logoImage {
+          max-height: 44px !important;
+        }
+        .menu-list-wrapper {
+          flex: 1 1 0%;
           position: relative;
-          .first-menu-item-wrapper {
-            height: 100%;
-            // display: flex;
-            flex-shrink: 0;
+          padding: 0px 24px;
+          box-sizing: border-box;
+          height: 100%;
+          .menu-list {
+            display: flex;
+            flex-wrap: nowrap;
+            padding: 8px 0px;
+            width: 100%;
+            // overflow: scroll hidden;
+            -webkit-box-pack: center;
+            justify-content: center;
             -webkit-box-align: center;
             align-items: center;
+            height: 100%;
+            box-sizing: border-box;
+            position: relative;
+            .first-menu-item-wrapper {
+              height: 100%;
+              // display: flex;
+              flex-shrink: 0;
+              -webkit-box-align: center;
+              align-items: center;
 
-            .header-badge {
-              position: absolute;
-              top: -10px;
-              right: 0px;
-              transform: translateX(100%);
-              width: max-content;
-              pointer-events: none;
-              display: inline-block;
-              line-height: 1;
-              padding: 2px 4px;
-              font-size: 11px;
-              border-radius: 8px;
-            }
-            .first-menu-item {
-              font-size: 14px;
-              // line-height: 20px;
-              font-family: Helvetica;
-              font-style: normal;
-              font-weight: 700;
-              color: rgb(0, 0, 0);
-              text-align: center;
-              padding: 0px 16px;
-              cursor: pointer;
-              margin-top: 3px;
-              line-height: 60px;
-            }
-            .pc-sub-menu {
-              max-height: 0px;
-              opacity: 0;
-              .first-level-header-sub-menu {
-                -webkit-box-pack: center;
-                justify-content: center;
-                max-height: 0px;
-                transition: max-height 0.2s ease 0s;
-                // overflow: scroll;
-                // box-shadow: rgba(0, 0, 0, 0.04) 0px 4px 8px;
-
-                width: fit-content !important;
-                display: flex;
-                box-sizing: border-box;
-                gap: 40px 24px;
-                padding: 40px 80px;
-                max-height: 900px;
-                z-index: 2;
+              .header-badge {
                 position: absolute;
-                top: calc(100% + 1px);
+                top: -10px;
+                right: 0px;
+                transform: translateX(100%);
+                width: max-content;
+                pointer-events: none;
+                display: inline-block;
+                line-height: 1;
+                padding: 2px 4px;
+                font-size: 11px;
+                border-radius: 8px;
               }
-            }
-            .first-menu-item + .pc-sub-menu {
-              opacity: 1;
+              .first-menu-item {
+                font-size: 14px;
+                // line-height: 20px;
+                font-family: Helvetica;
+                font-style: normal;
+                font-weight: 700;
+                color: rgb(0, 0, 0);
+                text-align: center;
+                padding: 0px 16px;
+                cursor: pointer;
+                margin-top: 3px;
+                line-height: 60px;
+              }
+              .pc-sub-menu {
+                max-height: 0px;
+                opacity: 0;
+                .first-level-header-sub-menu {
+                  -webkit-box-pack: center;
+                  justify-content: center;
+                  max-height: 0px;
+                  transition: max-height 0.2s ease 0s;
+                  // overflow: scroll;
+                  // box-shadow: rgba(0, 0, 0, 0.04) 0px 4px 8px;
+
+                  width: fit-content !important;
+                  display: flex;
+                  box-sizing: border-box;
+                  gap: 40px 24px;
+                  padding: 40px 80px;
+                  max-height: 900px;
+                  z-index: 2;
+                  position: absolute;
+                  top: calc(100% + 1px);
+                }
+              }
+              .first-menu-item:hover + .pc-sub-menu {
+                opacity: 1;
+              }
+              // .first-menu-item + .pc-sub-menu:hover {
+              //   opacity: 1;
+              // }
               .header-sub-menu-container {
                 padding: 40px !important;
                 // background-color: aqua;
@@ -300,23 +382,6 @@ export default {
                     display: block;
                     width: 100%;
                     margin-bottom: 16px;
-                  }
-                  .first-level-menu {
-                    position: relative;
-                    margin-bottom: 24px;
-                    word-break: break-word;
-                    font-size: 14px;
-                    line-height: 20px;
-                    font-weight: 500;
-                    .decorative-style {
-                      display: inline-block;
-                      width: auto;
-                      border-bottom: 1px solid rgb(68, 68, 68);
-                      align-items: center;
-                      p {
-                        margin-bottom: 2px !important;
-                      }
-                    }
                   }
                 }
                 .header-sub-menu-box {
@@ -334,114 +399,213 @@ export default {
             }
           }
         }
-      }
-      .eDpfeW {
-        text-align: right;
-        display: flex;
-        -webkit-box-align: center;
-        align-items: center;
-        -webkit-box-pack: end;
-        justify-content: flex-end;
-        .header-icon-container {
-          margin-left: 24px;
-          display: inline-block;
-          padding: 6px 0px;
-          .header-icon {
-            width: 24px;
-            height: 24px;
-            color: rgb(0, 0, 0);
+        .eDpfeW {
+          text-align: right;
+          display: flex;
+          -webkit-box-align: center;
+          align-items: center;
+          -webkit-box-pack: end;
+          justify-content: flex-end;
+          .header-icon-container {
+            margin-left: 24px;
             display: inline-block;
-            vertical-align: bottom;
-            font-size: 20px;
+            padding: 6px 0px;
+            .header-icon {
+              width: 24px;
+              height: 24px;
+              color: rgb(0, 0, 0);
+              display: inline-block;
+              vertical-align: bottom;
+              font-size: 20px;
+            }
           }
         }
       }
     }
   }
-}
 
-// 移动
-.mobile-box {
-  background: rgb(255, 246, 247);
-  .sub-header-container-mobile {
-    padding: 15px;
-    position: relative;
-    .wrapper {
-      font-size: 0px;
-      display: flex;
-      box-sizing: border-box;
-      -webkit-box-pack: center;
-      justify-content: center;
-      -webkit-box-align: center;
-      align-items: center;
-    }
-    .menu-of-mobile {
-      padding: 0px;
-      margin-right: 10px;
-      // .mobile-header-mask {
-      //   position: fixed;
-      //   left: 0px;
-      //   top: 0px;
-      //   width: 100vw;
-      //   height: 100%;
-      //   z-index: 10;
-      //   background: rgba(26, 26, 27, 0.3);
-      //   opacity: 0.3;
-      // }
+  // 移动
+  .mobile-box {
+    display: none;
+    background: rgb(255, 246, 247);
+    .sub-header-container-mobile {
+      padding: 15px;
+      position: relative;
+      .wrapper {
+        font-size: 0px;
+        display: flex;
+        box-sizing: border-box;
+        -webkit-box-pack: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        align-items: center;
+      }
+      .menu-of-mobile {
+        padding: 0px;
+        margin-right: 10px;
+        .mobile-header-mask {
+          position: fixed;
+          left: 0px;
+          top: 0px;
+          width: 100vw;
+          height: 100%;
+          z-index: 100;
+          background: rgba(26, 26, 27, 0.3);
+          opacity: 0.3;
+        }
 
-      // text-align: right;
+        // text-align: right;
+      }
+
+      .logoImage {
+        max-width: 200px;
+        max-height: 24px;
+        display: block;
+      }
+      .jUrgfb {
+        flex: 1 1 0%;
+        font-size: 20px;
+        display: flex;
+        -webkit-box-pack: end;
+        justify-content: flex-end;
+      }
     }
-    .slide {
-      top: 0px;
-      z-index: 600;
-      left: 0px;
-      width: 300px;
-      height: 100vh;
-      position: fixed;
-      transition: all 0.2s ease-in-out 0s;
-      // transform: translateX(-300px);
-      transform: translateX(0%);
-      overflow: hidden;
-      .slide-container {
-        background: rgb(255, 255, 255) !important;
-        color: rgb(68, 68, 68) !important;
-        height: 100%;
-        .slide-container-header {
-          line-height: 1;
-          padding-bottom: 16px;
-          border-bottom: 0px !important;
-          text-align: right;
-          padding: 0 18px 0;
-          box-shadow: rgb(209, 213, 219) 0px 0px 0px 0px;
-          display: flex;
-          -webkit-box-pack: end;
-          justify-content: flex-end;
+  }
+  //弹层
+  .slide {
+    top: 0px;
+    z-index: 600;
+    left: 0px;
+    width: 300px;
+    height: 100vh;
+    position: fixed;
+    transition: all 0.2s ease-in-out 0s;
+    transform: translateX(-300px);
+    // transform: translateX(0%);
+    overflow: hidden;
+    .slide-container {
+      background: rgb(255, 255, 255) !important;
+      color: rgb(68, 68, 68) !important;
+      height: 100%;
+      .slide-container-header {
+        line-height: 1;
+        padding-bottom: 16px;
+        border-bottom: 0px !important;
+        text-align: right;
+        padding: 8px 12px 0;
+        box-shadow: rgb(209, 213, 219) 0px 0px 0px 0px;
+        display: flex;
+        -webkit-box-pack: end;
+        justify-content: flex-end;
+      }
+      .slide-left-scroll-body {
+        height: calc(100% - 40px);
+        overflow: hidden scroll;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        -webkit-box-pack: start;
+        justify-content: flex-start;
+        &::-webkit-scrollbar {
+          width: 4px;
+          height: 4px;
+        }
+        &::-webkit-scrollbar-thumb {
+          -webkit-border-radius: 4px;
+          border-radius: 4px;
+          background: rgba(0, 0, 0, 0.4);
+        }
+        ::-webkit-scrollbar-track {
+          background: transparent;
+          -webkit-border-radius: 2px;
+          border-radius: 2px;
+        }
+        .side-slide-left-scroll-content {
+          width: 100%;
+          max-height: 100%;
+          margin: 24px 0px;
+          .menu-container {
+            text-align: left;
+            background-color: rgb(255, 255, 255);
+            color: rgb(68, 68, 68);
+            font-weight: 500;
+            .first-menu-title {
+              margin-left: 0px;
+              .first-menu-title-text {
+                max-width: 70%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                display: inline-block;
+                cursor: pointer;
+              }
+            }
+
+            .menu-level-one {
+              font-size: 14px;
+              color: rgb(68, 68, 68);
+            }
+            .sub-menu {
+              .sub-menu-title-container {
+                display: flex;
+                -webkit-box-align: center;
+                align-items: center;
+                -webkit-box-pack: justify;
+                justify-content: space-between;
+                .sub-menu-title {
+                  position: relative;
+                  width: calc(100% - 28px);
+                }
+                .sub-menu-icon {
+                  flex: 1 1 0%;
+                  text-align: right;
+                }
+              }
+              .sub-menu-container {
+                transition: height 200ms ease 0s;
+                overflow: hidden;
+                height: 0px;
+              }
+
+              .menu-image-item-image {
+                width: 100%;
+                background-color: rgba(220, 222, 224, 0.2);
+                text-align: center;
+              }
+            }
+          }
         }
       }
     }
-    .logoImage {
-      max-width: 200px;
-      max-height: 24px;
-      display: block;
-    }
-    .jUrgfb {
-      flex: 1 1 0%;
-      font-size: 20px;
-      display: flex;
-      -webkit-box-pack: end;
-      justify-content: flex-end;
+  }
+  .first-level-menu {
+    position: relative;
+    margin-bottom: 24px;
+    word-break: break-word;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 500;
+    .decorative-style {
+      display: inline-block;
+      width: auto;
+      border-bottom: 1px solid rgb(68, 68, 68);
+      align-items: center;
+      p {
+        margin-bottom: 2px !important;
+      }
     }
   }
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (max-width: 768px) {
+  .mobile-box {
+    display: block !important;
+  }
   .section-header {
-    min-height: 0px !important;
-    .logoImage {
-      max-width: 200px;
-      max-height: 24px;
-      display: block;
-    }
+    display: none;
+  }
+  .slide {
+    width: 300px;
   }
 }
 </style>

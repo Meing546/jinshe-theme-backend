@@ -7,8 +7,9 @@
             <page-notice v-if="curAssembly == 'PageNotice'"
                          :assembly="pageContent.content"
                          @call="returnData"></page-notice>
-            <page-navigation
-                         :assembly="pageContent.content" v-else-if="curAssembly == 'PageNavigation'" @call="returnData"></page-navigation>
+            <page-navigation :assembly="pageContent.content"
+                             v-else-if="curAssembly == 'PageNavigation'"
+                             @call="returnData"></page-navigation>
             <Intro v-else></Intro>
         </div>
         <!-- </div> -->
@@ -26,6 +27,22 @@ export default {
     "page-notice": PageNotice,
     "page-navigation": PageNavigation,
   },
+  computed: {
+    selectAssemblyFun() {
+      return this.$store.state.selectAssembly;
+    },
+  },
+  watch: {
+    selectAssemblyFun:{
+      immediate: true,
+      deep: true,
+      handler(val) {
+        if(val)this.selectAssembly(val);
+      },
+    },
+
+
+  },
   data() {
     return {
       pageContent: {},
@@ -33,11 +50,7 @@ export default {
     };
   },
   created() {
-    // 监听radioChange
-    // this.$bus.$on("selectAssembly", (res) => {
-    //   this.curAssembly = res.assembly;
-    //   this.pageContent = res;
-    // });
+
   },
 
   methods: {
@@ -46,12 +59,10 @@ export default {
       this.pageContent = res;
     },
     getPageArr(res) {
-      console.info("编辑查看信息-=-=", res);
       this.pageArr = res;
     },
     returnData(data) {
-      console.info("", data);
-      this.$emit("callPage", { data, assembly: this.curAssembly });
+      this.$emit("callPage", { data, assembly: this.curAssembly});
     },
   },
 };

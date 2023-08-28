@@ -135,8 +135,7 @@ export default {
   watch: {
     group: {
       handler(newVal) {
-        console.info("监听-0--",newVal,this.group)
-        this.$emit("call", this.group);
+        this.$emit("call", newVal);
       },
       deep: true,
     },

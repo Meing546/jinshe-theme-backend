@@ -7,16 +7,16 @@
                  @click="edit(item,index)"
                  class="fJRcxb W100 relative"
                  :class="{'active':(curAssembly == item.assembly)}">
-                    <div v-show="curAssembly == item.assembly" >
-                        <div class="wrapper-section-name">{{ item.title }}</div>
-                        <div class="wrapper-section-operate white fs12"
-                             v-if="['PageNotice','PageNavigation'].indexOf(item.assembly) == -1">
-                            <div class="short-cut-item"><span class="iconfont">&#xe795;</span></div>
-                            <div class="short-cut-item"><span class="iconfont roate180">&#xe795;</span></div>
-                            <div class="short-cut-item"><span class="iconfont">&#xe622;</span></div>
-                            <div class="short-cut-item"><span class="iconfont">&#xe74b;</span></div>
-                        </div>
+                <div v-show="curAssembly == item.assembly">
+                    <div class="wrapper-section-name">{{ item.title }}</div>
+                    <div class="wrapper-section-operate white fs12"
+                         v-if="['PageNotice','PageNavigation'].indexOf(item.assembly) == -1">
+                        <div class="short-cut-item"><span class="iconfont">&#xe795;</span></div>
+                        <div class="short-cut-item"><span class="iconfont roate180">&#xe795;</span></div>
+                        <div class="short-cut-item"><span class="iconfont">&#xe622;</span></div>
+                        <div class="short-cut-item"><span class="iconfont">&#xe74b;</span></div>
                     </div>
+                </div>
                 <!-- 公告栏 -->
                 <page-notice v-if="item.assembly == 'PageNotice'"
                              ref="myPageNotice"
@@ -24,7 +24,9 @@
                 <!-- 导航栏 -->
                 <page-navigation v-if="item.assembly == 'PageNavigation'"
                                  :assembly="item"></page-navigation>
+
             </div>
+
         </div>
 
         <!-- </div> -->
@@ -33,6 +35,7 @@
 <script>
 import PageNotice from "../components/assembly/PageNotice.vue";
 import PageNavigation from "../components/assembly/PageNavigation.vue";
+
 export default {
   components: {
     "page-notice": PageNotice,
@@ -47,22 +50,26 @@ export default {
   },
   mounted() {
     this.pageArr = this.$store.state.sub_menu_temp[0];
-    this.$bus.$on("adaptationIndex", (index) => {
-      this.adaptationIndex = index;
+    console.info("打印-=-=",this.pageArr)
+    window.addEventListener("message", (res) => {
+      let info = res.data;
+      if (info.key == "callPage") {
+        this.callPage(info.params);
+      }
     });
   },
   methods: {
     edit(item, index) {
       console.log(item, index);
       this.curAssembly = item.assembly;
-      this.$emit("selectAssembly", { type: "Browse", data: item });
+      // 修改数据的逻辑
+      window.parent.postMessage({ key: "selectAssembly", params: item }, "*");
     },
     selectAssembly(res) {
       this.curAssembly = res.assembly;
     },
     getPageArr(res) {
       this.pageArr = JSON.parse(JSON.stringify(res));
-
     },
     callPage(res) {
       if (res.assembly) {
@@ -70,7 +77,6 @@ export default {
           if (ele.assembly == res.assembly) ele.content = res.data;
         });
         this.pageArr = JSON.parse(JSON.stringify(this.pageArr));
-
       }
     },
   },

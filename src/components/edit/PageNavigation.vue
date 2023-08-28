@@ -835,12 +835,11 @@ export default {
     };
   },
   mounted() {
-    console.info("父组件值", this.assembly);
-    // this.group = JSON.parse(JSON.stringify(this.assembly));
+    console.info("打印-=-=",this.assembly)
+    this.group = JSON.parse(JSON.stringify(this.assembly));
   },
   methods: {
     cutPanel(level, index, item) {
-      console.info(item);
       this.zIndexPanel += 1;
       if (level == 1) {
         this.contentIndex = index;
@@ -873,7 +872,6 @@ export default {
         }
         this.visible = false;
       } else if (type == 2) {
-        console.info(type, index);
         if (index == 1) {
           this.group.content[this.contentIndex].children.push({
             antSize: 12, //字体大小
@@ -937,7 +935,6 @@ export default {
       this.isImageList = true;
     },
     getImage(item) {
-      console.info("打印获取到的图片-=-=", item);
       if (this.imageType == "logo") this.group.logoImage = item.link;
       else if (this.imageType == "content")
         this.group.content[this.contentIndex].children[this.stairIndex].img =

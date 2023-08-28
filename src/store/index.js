@@ -82,19 +82,19 @@ export default new Vuex.Store({
               'https://img01.yzcdn.cn/upload_files/2021/08/07/Fm1PAsz1rZpFaSdAaOEvJ5XrGAfd.png',
             navHeight: 80,
             width: 'full', //导航栏宽度
-            mainMenu: 1, //主菜单对齐方式
+            mainMenu: 2, //主菜单对齐方式
             submenu: 1, //子菜单对齐方式
             openMode: 1, //子菜单打开方式
             expansionStyle: 1, //H5展开图标样式
             mainMenuGap: 16, //主菜单宽度
             menuGroups: 205, //菜单组宽度
             exhibit: [], //子菜单自适应内容宽度,上滑消失下滑出现
-            bgColor: '', //背景色
+            bgColor: 'rgb(255, 246, 247', //背景色
             contentColor: '', //文字与图标颜色
             lucencyBg: false, //透明背景色
             slideBg: '', //滑动前背景颜色
             slideContentColor: '', //滑动前文字颜色
-            submenuBg: '', //子菜单背景
+            submenuBg: '#ffffff', //子菜单背景
             submenuContentColor: '', //子菜单文字
             stairFontSize: 11, //一级字号
             secondFontSize: 11, //二级字号
@@ -162,9 +162,18 @@ export default new Vuex.Store({
         { id: '203', title: '圆角', iconfont: '\ue672' },
       ],
     ],
+    selectAssembly:{},
   },
-  getters: {},
-  mutations: {},
+  getters: {
+
+
+  },
+  mutations: {
+    // 修改数据
+    setData(state,infos){
+      state[infos.key] = infos.data;
+    }
+  },
   actions: {},
   modules: {},
 });

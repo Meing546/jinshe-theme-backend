@@ -24,7 +24,7 @@
                        :href="item.href"
                        class="mr20"
                        :style="{color:assemblyData.iconColor}">
-                        <span class="iconfont ">{{ item.icon }}</span>
+                        <i class="iconfont ">{{ item.icon }}</i>
                     </a>
                 </span>
             </li>

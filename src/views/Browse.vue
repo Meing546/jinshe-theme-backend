@@ -23,29 +23,36 @@
                              :assembly="item"></page-notice>
                 <!-- 导航栏 -->
                 <page-navigation v-if="item.assembly == 'PageNavigation'"
+                                 @personal="personal"
                                  :assembly="item"></page-navigation>
-
+                <!-- 单个商品 -->
+                <page-dingle-commodities v-if="item.assembly == 'PageDingleCommodities'"
+                                         :assembly="item"></page-dingle-commodities>
             </div>
 
         </div>
 
-        <!-- </div> -->
+        <Registration v-if="isRegistration"></Registration>
     </div>
 </template>
 <script>
 import PageNotice from "../components/assembly/PageNotice.vue";
 import PageNavigation from "../components/assembly/PageNavigation.vue";
-
+import Registration from "../components/Registration.vue";
+import PageDingleCommodities from "../components/assembly/PageDingleCommodities.vue"
 export default {
   components: {
     "page-notice": PageNotice,
     "page-navigation": PageNavigation,
+    "page-dingle-commodities":PageDingleCommodities,
+    Registration
   },
   data() {
     return {
       pageArr: [],
       curAssembly: "",
       adaptationIndex: 1,
+      isRegistration:false
     };
   },
   mounted() {
@@ -59,6 +66,11 @@ export default {
     });
   },
   methods: {
+    personal(type){
+      if(type == 'account'){
+        this.isRegistration = true;
+      }
+    },
     edit(item, index) {
       console.log(item, index);
       this.curAssembly = item.assembly;

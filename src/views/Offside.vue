@@ -10,6 +10,9 @@
             <page-navigation :assembly="pageContent.content"
                              v-else-if="curAssembly == 'PageNavigation'"
                              @call="returnData"></page-navigation>
+            <page-dingle-commodities :assembly="pageContent.content"
+                                     v-else-if="curAssembly == 'PageDingleCommodities'"
+                                     @call="returnData"></page-dingle-commodities>
             <Intro v-else></Intro>
         </div>
         <!-- </div> -->
@@ -20,12 +23,14 @@
 <script>
 import PageNotice from "../components/edit/PageNotice.vue";
 import PageNavigation from "../components/edit/PageNavigation.vue";
+import PageDingleCommodities from "../components/edit/PageDingleCommodities.vue";
 import Intro from "../components/Intro.vue";
 export default {
   components: {
     Intro,
     "page-notice": PageNotice,
     "page-navigation": PageNavigation,
+    "page-dingle-commodities": PageDingleCommodities,
   },
   computed: {
     selectAssemblyFun() {
@@ -33,15 +38,13 @@ export default {
     },
   },
   watch: {
-    selectAssemblyFun:{
+    selectAssemblyFun: {
       immediate: true,
       deep: true,
       handler(val) {
-        if(val)this.selectAssembly(val);
+        if (val) this.selectAssembly(val);
       },
     },
-
-
   },
   data() {
     return {
@@ -49,9 +52,7 @@ export default {
       curAssembly: "",
     };
   },
-  created() {
-
-  },
+  created() {},
 
   methods: {
     selectAssembly(res) {
@@ -62,7 +63,7 @@ export default {
       this.pageArr = res;
     },
     returnData(data) {
-      this.$emit("callPage", { data, assembly: this.curAssembly});
+      this.$emit("callPage", { data, assembly: this.curAssembly });
     },
   },
 };

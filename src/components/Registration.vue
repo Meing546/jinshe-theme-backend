@@ -2,7 +2,7 @@
 <template>
     <div>
         <div class="mask"></div>
-        <div class="center">
+        <div class="">
             <div class="login_box ">
                 <div class="flex borderBottom">
                     <div class="pl20 W90 fs16">{{title}}</div>
@@ -60,8 +60,8 @@
 export default {
   data() {
     return {
-      title: "新用户注册",
-      type: 3,
+      title: "密码登录",
+      type: 1,
       dialogVisible: true,
     };
   },
@@ -83,9 +83,19 @@ export default {
   z-index: 1050;
 }
 .login_box {
-  // min-width: 560px;
+  // animation: sway 1s linear infinite;
+  // @keyframes sway {
+  //   0% {
+  //     transform: translateY(0);
+  //   }
+  //   100% {
+  //     transform: translate(100px);
+  //   }
+  // }
 
-  width: 560px;
+  min-width: 560px;
+
+  // width: 560px;
   transform-origin: 896.222px 79.6389px 0px;
   // padding: 24px 0px !important;
   padding-top: 24px;

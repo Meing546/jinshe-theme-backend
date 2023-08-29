@@ -90,7 +90,7 @@
                                         width="40"
                                         trigger="hover">
                                 <div class="personal">
-                                    <div>我的账户</div>
+                                    <div @click="personal('account')">我的账户</div>
                                     <div>我的优惠券</div>
                                     <div>消息通知</div>
                                 </div>
@@ -222,15 +222,10 @@
                 </div>
             </div>
         </div>
-        <v-registration></v-registration>
     </div>
 </template>
 <script>
-import Registration from "../Registration.vue";
 export default {
-  components: {
-    "v-registration": Registration,
-  },
   props: {
     assembly: {
       type: Object,
@@ -264,7 +259,11 @@ export default {
   mounted() {
     this.assemblyData = JSON.parse(JSON.stringify(this.assembly.content));
   },
-  methods: {},
+  methods: {
+    personal(type){
+      this.$emit('personal',type)
+    }
+  },
 };
 </script>
 

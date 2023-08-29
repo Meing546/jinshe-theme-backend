@@ -108,6 +108,22 @@ export default new Vuex.Store({
           isShow: true,
           prefix: true,
           iconfont: '\ue603',
+          assembly:"PageDingleCommodities",
+          content: {
+            product: {
+              goodsId: "4429532",
+              name: "名称",
+              img: "https://intl-image.yzcdn.cn/images/2023/08/18/7526ee786591bd91c31d1b9f286c6712.png?mediaId=7000245342&mediaId=7000245342",
+            },
+            goodsImgRatio: 1, //商品图比例
+            goodsNameSize: 7, //商品[名称字体大小
+            goodsMoneySize: 8, //商品金额字体大小
+            socialContact: 1, //社交分享按钮样式
+            socialContactColor: '#000', //社交分享按钮
+            displayContent: [], //显示内容
+            displayDirection: 1, //略缩图展示方向
+            ContainerWidth: 1, //容器宽度
+          },
         },
       ],
       [
@@ -162,17 +178,148 @@ export default new Vuex.Store({
         { id: '203', title: '圆角', iconfont: '\ue672' },
       ],
     ],
-    selectAssembly:{},
+    selectAssembly: {},
+    // 临时数据
+    productArr: [
+      {
+        bizSource: 0,
+        createdAt: 1693275441408,
+        goodsDesc: '测试测试测试测试测试 ',
+        goodsFeatureType: 'tangible',
+        goodsId: 4429532,
+        goodsLock: 0,
+        goodsSellPoint: '',
+        goodsStatus: 1,
+        goodsStatusStr: 'up',
+        goodsTags: [],
+        goodsType: '',
+        goodsUpAt: 0,
+        handle: '名称',
+        kdtId: 141586306,
+        maxPrice: 11000,
+        media: [
+          {
+            coverUrl:
+              'https://intl-image.yzcdn.cn/images/2023/08/18/7526ee786591bd91c31d1b9f286c6712.png?w=100',
+            mediaId: 7000245342,
+            type: 'IMAGE',
+            url: 'https://intl-image.yzcdn.cn/images/2023/08/18/7526ee786591bd91c31d1b9f286c6712.png?mediaId=7000245342&mediaId=7000245342',
+          },
+          {
+            coverUrl:
+              'https://intl-image.yzcdn.cn/images/2023/08/23/ff2d6e9e60f6a0f502352ca0cc3b7ac0.png?w=100',
+            mediaId: 7000325090,
+            type: 'IMAGE',
+            url: 'https://intl-image.yzcdn.cn/images/2023/08/23/ff2d6e9e60f6a0f502352ca0cc3b7ac0.png?mediaId=7000325090',
+          },
+        ],
+        minPrice: 11000,
+        noInventoryRestrictions: 0,
+        options: [],
+        quantity: 12,
+        seo: {
+          metafieldsGlobalDescriptionTag: '商品详情',
+          metafieldsGlobalTitleTag: '名称',
+        },
+        soldNum: 1,
+        supportVirtualSales: 1,
+        title: '名称',
+        updatedAt: 1693275441408,
+        variantQty: 1,
+        variants: [
+          {
+            barcode: '2',
+            compareAtPrice: 2000,
+            cost: 2000,
+            imageUrl:
+              'https://intl-image.yzcdn.cn/images/2023/08/18/7526ee786591bd91c31d1b9f286c6712.png?mediaId=7000245342&mediaId=7000245342',
+            price: 11000,
+            quantity: 12,
+            requiresShipping: 1,
+            requiresTax: 0,
+            sku: '1',
+            variantId: 21549065,
+            weight: '1',
+            weightUnit: 'kg',
+          },
+        ],
+        vendor: '',
+        virtualSales: 1,
+      },
+      {
+        bizSource: 0,
+        createdAt: 1693270307587,
+        goodsDesc: '',
+        goodsFeatureType: 'tangible',
+        goodsId: 4429438,
+        goodsLock: 0,
+        goodsSellPoint: '',
+        goodsStatus: 1,
+        goodsStatusStr: 'up',
+        goodsTags: [],
+        goodsType: '1',
+        goodsUpAt: 0,
+        handle: '111',
+        kdtId: 141586306,
+        maxPrice: 1000,
+        media: [
+          {
+            coverUrl:
+              'https://intl-image.yzcdn.cn/images/2023/08/23/ff2d6e9e60f6a0f502352ca0cc3b7ac0.png?w=100',
+            mediaId: 7000325090,
+            type: 'IMAGE',
+            url: 'https://intl-image.yzcdn.cn/images/2023/08/23/ff2d6e9e60f6a0f502352ca0cc3b7ac0.png?mediaId=7000325090',
+          },
+          {
+            coverUrl:
+              'https://intl-image.yzcdn.cn/images/2023/08/18/7526ee786591bd91c31d1b9f286c6712.png?w=100',
+            mediaId: 7000245342,
+            type: 'IMAGE',
+            url: 'https://intl-image.yzcdn.cn/images/2023/08/18/7526ee786591bd91c31d1b9f286c6712.png?mediaId=7000245342',
+          },
+        ],
+        minPrice: 1000,
+        noInventoryRestrictions: 0,
+        options: [],
+        quantity: 12,
+        seo: {
+          metafieldsGlobalDescriptionTag: '测试测试测试',
+          metafieldsGlobalTitleTag: '111',
+        },
+        soldNum: 0,
+        supportVirtualSales: 0,
+        title: '111',
+        updatedAt: 1693270307587,
+        variantQty: 1,
+        variants: [
+          {
+            barcode: '22',
+            compareAtPrice: 2000,
+            cost: 1000,
+            imageUrl:
+              'https://intl-image.yzcdn.cn/images/2023/08/23/ff2d6e9e60f6a0f502352ca0cc3b7ac0.png?mediaId=7000325090',
+            price: 1000,
+            quantity: 12,
+            requiresShipping: 1,
+            requiresTax: 0,
+            sku: '12',
+            variantId: 21548389,
+            weight: '21',
+            weightUnit: 'kg',
+          },
+        ],
+        vendor: '2',
+        virtualSales: 0,
+        withVariants: 0,
+      },
+    ],
   },
-  getters: {
-
-
-  },
+  getters: {},
   mutations: {
     // 修改数据
-    setData(state,infos){
+    setData(state, infos) {
       state[infos.key] = infos.data;
-    }
+    },
   },
   actions: {},
   modules: {},

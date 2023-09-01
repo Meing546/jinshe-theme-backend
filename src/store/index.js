@@ -108,12 +108,12 @@ export default new Vuex.Store({
           isShow: true,
           prefix: true,
           iconfont: '\ue603',
-          assembly:"PageDingleCommodities",
+          assembly: 'PageDingleCommodities',
           content: {
             product: {
-              goodsId: "4429532",
-              name: "名称",
-              img: "https://intl-image.yzcdn.cn/images/2023/08/18/7526ee786591bd91c31d1b9f286c6712.png?mediaId=7000245342&mediaId=7000245342",
+              goodsId: '4429532',
+              name: '名称',
+              img: 'https://intl-image.yzcdn.cn/images/2023/08/18/7526ee786591bd91c31d1b9f286c6712.png?mediaId=7000245342&mediaId=7000245342',
             },
             goodsImgRatio: 1, //商品图比例
             goodsNameSize: 7, //商品[名称字体大小
@@ -124,6 +124,54 @@ export default new Vuex.Store({
             displayDirection: 1, //略缩图展示方向
             ContainerWidth: 1, //容器宽度
           },
+        },
+        {
+          id: '004',
+          title: '商品分组',
+          isShow: true,
+          prefix: true,
+          iconfont: '\uec23;',
+          assembly: 'PageCommodityGrouping1',
+          content: {
+            goodsDataType: 2, //指点商品数据类型
+            product: [], //商品列表
+            grouping: {
+              //分组
+              groupingId: '',
+              img: '',
+              name: '',
+            },
+            title: '', //标题
+            titleSize: 7, //标题字体大小
+            titleAlignType: 1, //标题对齐方式
+            goodsTextAlignType: 1, //商品文本对齐方式
+            goodsNameLine: -1, // 商品名称行数
+            goodsNameSize: 10, //商品名称大小
+            goodsMoneySize: 11, //商品金额大小
+            goodsLineNumber: 4, //每行商品数量
+            goodsShowLineNum: 3, //商品展示行数
+            imgRatio: 1, //图片比例
+            ContainerWidth: 3, //容器宽度
+            displayContent: [],
+            shoppingCartStyle: 1, //购物车样式
+            evaluateStyle: 1, //评价样式
+            cardColor: '', //卡片颜色
+            bgStyle: 2, //背景样式
+            bgStyleValue: '', //图片或颜色
+            mobileDevices: 1, //移动设备展示方式
+            carouselStyle: 1, //轮播图样式
+            isAutoplay: false, //是否自动播放
+            intervalSecond: 3, //自动播放间隔秒
+          },
+        },
+        {
+          id: '004',
+          title: '商品分组3.0',
+          isShow: true,
+          prefix: true,
+          iconfont: '\uec23;',
+          assembly: 'PageCommodityGrouping3',
+          content: {},
         },
       ],
       [
@@ -179,7 +227,7 @@ export default new Vuex.Store({
       ],
     ],
     selectAssembly: {},
-    // 临时数据
+    // 临时数据商品
     productArr: [
       {
         bizSource: 0,
@@ -311,6 +359,42 @@ export default new Vuex.Store({
         vendor: '2',
         virtualSales: 0,
         withVariants: 0,
+      },
+    ],
+    // 分组
+    groupingArr: [
+      {
+        goodsList: [4429532],
+        collectionId: 2031451,
+        cover:
+          'https://intl-image.yzcdn.cn/images/2023/08/30/48ae142e27b1adfc4247810c7b191cc9.jpg',
+        createdAt: 1693363101881,
+        descriptionHtml:
+          '<p>111111111111111111133</p>\n<p><img src="https://intl-image.yzcdn.cn/images/2023/08/29/e1b2e59d6de7c22d97c28a45c83730f4.jpg?mediaId=7000432993" alt="" width="528" /><br /><img src="https://intl-image.yzcdn.cn/images/2023/08/29/85f7d2247772ca98e05e9b4dd6414171.png?mediaId=7000433272" alt="" width="528" /><br /><img src="https://intl-image.yzcdn.cn/images/2023/08/29/9c19d76d9ceb8289a888058d5f95fd85.png?mediaId=7000433064" alt="" width="528" /></p>',
+        goodsCount: 1,
+        handle: '分组一-1',
+        isAuto: false,
+        kdtId: 142990844,
+        sortIndex: 0,
+        status: 'completed',
+        title: '分组一',
+        updatedAt: 1693363108512,
+      },
+      {
+        goodsList: [4429532, 4429438],
+        collectionId: 2031650,
+        cover:
+          'https://intl-image.yzcdn.cn/images/2023/08/29/79d4c00d281cd88dd0a94a106f4e1601.png',
+        createdAt: 1693300140456,
+        descriptionHtml: '<p>分组详情描述</p>',
+        goodsCount: 3,
+        handle: '分组一',
+        isAuto: false,
+        kdtId: 142990844,
+        sortIndex: 0,
+        status: 'completed',
+        title: '分组一',
+        updatedAt: 1693300157954,
       },
     ],
   },

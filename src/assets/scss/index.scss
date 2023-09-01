@@ -100,6 +100,10 @@
     display: flex;
     justify-content: start !important;
 }
+.column{
+    display: flex;
+    flex-direction: column;
+}
 .relative{position: relative;}
 .absolute{position: absolute;}
 .hand:hover{cursor: pointer;}
@@ -168,6 +172,7 @@
 .ml0 {margin-left: 0px !important}
 .ml5 {margin-left: 5px !important}
 .ml0 {margin-left: 0px !important}
+.ml-5 {margin-left: -5px;}
 .ml-10 {margin-left: -10px;}
 .ml-12 {margin-left: -12px;}
 .ml-26 {margin-left: -26px;}
@@ -183,7 +188,8 @@
 .ml40 {margin-left: 40px;}
 .ml50 {margin-left: 50px;}
 .ml00 {margin-left: 100px;}
-.mr0  {margin-left: 0px !important;}
+.mr0  {margin-right: 0px !important;}
+.mr5  {margin-right: 5px;}
 .mr8 {margin-right: 8px;}
 .mr10 {margin-right: 10px;}
 .mr12 {margin-right: 12px;}
@@ -257,7 +263,7 @@
 .W80{width: 80%;}
 .W90{width: 90%;}
 .W98{width: 98%;}
-.W100{width: 100%;}
+.W100{width: 100% !important;}
 .w20{width:20px !important}
 .w24{width:24px !important}
 .w30{width:30px !important}
@@ -327,6 +333,7 @@
 .fs20{font-size: 20px !important;}
 .fs24{font-size: 24px !important;}
 .fs25{font-size: 25px !important;}
+.fs26{font-size: 26px !important;}
 .fs30{font-size: 30px !important;}
 .fs36{font-size: 36px;}
 .fw500{font-weight: 500;}

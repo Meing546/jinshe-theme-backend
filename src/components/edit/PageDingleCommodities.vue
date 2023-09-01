@@ -144,7 +144,6 @@
                         <span class="text_color ml30">添加内容</span>
                     </div>
                 </div>
-
                 <div v-for="item in productArr"
                      :key="item.index"
                      class="list-item">
@@ -158,21 +157,27 @@
                               :label="item.goodsId"
                               @input="pitchGoods"></el-radio>
                 </div>
-
                 <div class="footer-bottom"
                      v-if="zIndexPanel > 1">
                     <el-button @click.stop="zIndexPanel--">取消</el-button>
                     <el-button @click.stop="zIndexPanel--"
                                type="primary">选择</el-button>
                 </div>
-
             </div>
-
         </div>
     </div>
 </template>
 <script>
 export default {
+
+  watch: {
+    group: {
+      handler(newVal) {
+        this.$emit("call", newVal);
+      },
+      deep: true,
+    },
+  },
   data() {
     return {
       zIndexPanel: 1,

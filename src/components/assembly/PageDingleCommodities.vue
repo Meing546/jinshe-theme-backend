@@ -12,12 +12,12 @@
                                          class="W100"
                                          style="height: 100%;object-fit: cover;object-position: center center;">
                                 </div>
-
                             </div>
                         </div>
                         <div>
                             <div class="media-gallery">
-                                <ul class="media-list">
+                                <ul class="media-list"
+                                    v-show="assemblyData.displayContent.indexOf(8)!=-1">
                                     <li v-for="item in goodsInfo.media"
                                         :key="item.url"
                                         class="media-list-item ml10"
@@ -32,32 +32,36 @@
                     </div>
                     <div class="products-info-container">
                         <div class="hand">
-                            <div style="font-size: 24px;"
-                                 class="fw600">{{goodsInfo.title }}</div>
+                            <div class="fw600 fs24 goodsTitle"><span>{{goodsInfo.title }}</span></div>
                             <div class="gZgzqr">
-                                <div>
-                                    <el-rate v-model="rateValue"
+                                <div class="dpElym flex topCenter"
+                                     v-if="assemblyData.displayContent.indexOf(2)!=-1">
+                                    <el-rate class="mr5" v-model="rateValue"
                                              disabled></el-rate>
+
+                                    0<span class="ml2">评价</span>
                                 </div>
-                                <div class="dpElym flex topCenter">
-                                    0<span class="ml5">评价</span>
-                                </div>
-                                <div class="dpElym flex topCenter">
+                                <div class="dpElym flex topCenter"
+                                     v-if="assemblyData.displayContent.indexOf(7)!=-1">
                                     供货商
                                 </div>
-                                <div class="dpElym flex topCenter">
-                                    0<span class="ml5">销量</span>
+                                <div class="dpElym flex topCenter"
+                                     v-if="assemblyData.displayContent.indexOf(3)!=-1">
+                                    0<span class="ml2">销量</span>
                                 </div>
-                                <div class=" flex topCenter">
-                                    555<span class="ml5">可售</span>
+                                <div class=" flex topCenter"
+                                     v-if="assemblyData.displayContent.indexOf(4)!=-1">
+                                    555<span class="ml2">可售</span>
                                 </div>
                             </div>
                             <div class="featured-products-price mt20">
                                 <div class="cur-price">CN¥111</div>
                                 <div class="dash-discount-label ml5">5折优惠</div>
-                                <div class="underlined-price">CN¥222</div>
+                                <div class="underlined-price"
+                                     v-if="assemblyData.displayContent.indexOf(5)!=-1">CN¥222</div>
                             </div>
-                            <div class="sku-line">
+                            <div class="sku-line"
+                                 v-if="assemblyData.displayContent.indexOf(6)!=-1">
                                 <div class="sku-title">数量</div>
                                 <el-input-number v-model="num"
                                                  @change="handleChange"
@@ -66,18 +70,24 @@
                                                  label="描述文字"></el-input-number>
                             </div>
                             <div class="operation-item">
-                                <el-button size="medium">加入购物车</el-button>
                                 <el-button size="medium"
+                                           :class="{'W100':assemblyData.displayContent.indexOf(9)==-1}">加入购物车</el-button>
+                                <el-button size="medium"
+                                           v-if="assemblyData.displayContent.indexOf(9)!=-1"
                                            type="primary">立即购买</el-button>
                             </div>
-                            <div class="mt20">商品详情</div>
-                            <div class="mt20">
-                                <a v-for="(item,index) in mediaArr"
-                                   :key="index"
-                                   :href="item.href"
-                                   class="mr20">
-                                    <i class="iconfont ">{{ item.icon }}</i>
-                                </a>
+                            <div class="mt40">商品详情</div>
+                            <div class="mt40"
+                                 v-if="assemblyData.displayContent.indexOf(10)!=-1">
+                                <span v-for="(item,index) in mediaArr"
+                                      :key="index"
+                                      :href="item.href"
+                                      :class="{'featured-products-share-item':(assemblyData.socialContact==1)}">
+                                    <i class="iconfont mr10"
+                                       :class="index>3?'fs26':'fs24'"
+                                       :style="{color:assemblyData.displayContent.indexOf(1)!=-1?assemblyData.socialContactColor:item.color}"> {{ item.icon }}</i>
+                                    <span v-if="assemblyData.socialContact==1">{{ item.name }}</span>
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -110,14 +120,13 @@ export default {
       assemblyData: {},
       goodsInfo: {},
       mediaArr: [
-        { icon: "\ue736", href: "www.twitter.com" },
-        { icon: "\ue610", href: "www.Facebook.com" },
-        { icon: "\ue634", href: "www.Pinterest.com" },
-        { icon: "\ue88f", href: "www.Instagram.com" },
-        { icon: "\uec99", href: "www.Tumblr.com" },
-        { icon: "\ue646", href: "www.Snapchat.com" },
-        { icon: "\ue883", href: "www.YouTube.com" },
-        { icon: "\ue6b3", href: "www.Vimeo.com" },
+        { icon: "\ue755", name: "Facebook", color: "rgb(58, 90, 152)" },
+        { icon: "\uea07", name: "WhatsApp", color: "rgb(76, 194, 71)" },
+        { icon: "\ue607", name: "微信", color: "rgb(12, 193, 95)" },
+        { icon: "\ue602", name: "Line", color: "rgb(3, 184, 3)" },
+        { icon: "\ue613", name: "Twitter", color: "rgb(83, 172, 238)" },
+        { icon: "\ue6a0", name: "Pinterest", color: "rgb(202, 36, 44);" },
+        { icon: "\ue60d", name: "复制链接", color: "rgb(51, 51, 51)" },
       ],
       rateValue: 5,
       num: 1,
@@ -214,6 +223,9 @@ export default {
         font-style: normal;
         font-weight: 700;
         margin-top: 10px;
+        ::v-deep .el-rate__icon {
+          margin-right: 0px !important;
+        }
       }
       .featured-products-price {
         display: flex;
@@ -299,6 +311,21 @@ export default {
           background: #000;
         }
       }
+      .featured-products-share-item {
+        padding: 6px 0.833333vw;
+        margin-right: 0.555556vw;
+        margin-top: 0.555556vw;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 20px;
+        letter-spacing: 1px;
+        display: inline-block;
+        border: 1px solid #d1d5db;
+        i {
+          font-size: 14px !important;
+        }
+      }
     }
   }
 }
@@ -319,6 +346,26 @@ export default {
       width: 100%;
       margin: 0px auto;
       align-items: flex-start;
+    }
+  }
+}
+@media screen and (max-width: 1281px) {
+  .featured-products {
+    width: 100%;
+    box-sizing: border-box;
+    .products-info-container {
+      margin-top: 16px;
+      width: auto !important;
+      margin: 24px !important;
+    }
+  }
+}
+@media screen and (max-width: 960px) {
+  .product-media-preview {
+    width: 100% !important;
+    margin-right: 0px;
+    .product-main-media-wrapper {
+      max-width: 100%;
     }
   }
 }

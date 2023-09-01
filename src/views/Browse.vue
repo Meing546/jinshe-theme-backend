@@ -28,37 +28,47 @@
                 <!-- 单个商品 -->
                 <page-dingle-commodities v-if="item.assembly == 'PageDingleCommodities'"
                                          :assembly="item"></page-dingle-commodities>
+                <!-- 组合商品 -->
+                <page-commodity-grouping1 v-if="item.assembly == 'PageCommodityGrouping1'"
+                                          :assembly="item"></page-commodity-grouping1>
+                <page-commodity-grouping3 v-if="item.assembly == 'PageCommodityGrouping3'"
+                                          :assembly="item"></page-commodity-grouping3>
             </div>
 
         </div>
 
-        <Registration v-if="isRegistration"></Registration>
+        <Registration v-if="isRegistration"
+                      @close="isRegistration=false"></Registration>
     </div>
 </template>
 <script>
 import PageNotice from "../components/assembly/PageNotice.vue";
 import PageNavigation from "../components/assembly/PageNavigation.vue";
 import Registration from "../components/Registration.vue";
-import PageDingleCommodities from "../components/assembly/PageDingleCommodities.vue"
+import PageDingleCommodities from "../components/assembly/PageDingleCommodities.vue";
+import PageCommodityGrouping1 from "../components/assembly/PageCommodityGrouping1.vue";
+import PageCommodityGrouping3 from "../components/assembly/PageCommodityGrouping3.vue";
 export default {
   components: {
     "page-notice": PageNotice,
     "page-navigation": PageNavigation,
-    "page-dingle-commodities":PageDingleCommodities,
-    Registration
+    "page-dingle-commodities": PageDingleCommodities,
+    "page-commodity-grouping1": PageCommodityGrouping1,
+    "page-commodity-grouping3": PageCommodityGrouping3,
+    Registration,
   },
   data() {
     return {
       pageArr: [],
       curAssembly: "",
       adaptationIndex: 1,
-      isRegistration:false
+      isRegistration: false,
     };
   },
   mounted() {
     this.pageArr = this.$store.state.sub_menu_temp[0];
-    console.info("打印-=-=",this.pageArr)
     window.addEventListener("message", (res) => {
+      console.info("打印-=-=", this.pageArr);
       let info = res.data;
       if (info.key == "callPage") {
         this.callPage(info.params);
@@ -66,8 +76,8 @@ export default {
     });
   },
   methods: {
-    personal(type){
-      if(type == 'account'){
+    personal(type) {
+      if (type == "account") {
         this.isRegistration = true;
       }
     },
@@ -84,6 +94,7 @@ export default {
       this.pageArr = JSON.parse(JSON.stringify(res));
     },
     callPage(res) {
+      console.info("返回数据-=-=", res);
       if (res.assembly) {
         this.pageArr.forEach((ele) => {
           if (ele.assembly == res.assembly) ele.content = res.data;

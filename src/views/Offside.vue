@@ -13,6 +13,9 @@
             <page-dingle-commodities :assembly="pageContent.content"
                                      v-else-if="curAssembly == 'PageDingleCommodities'"
                                      @call="returnData"></page-dingle-commodities>
+            <page-commodity-grouping1 :assembly="pageContent.content"
+            v-else-if="curAssembly == 'PageCommodityGrouping1'"
+                                     @call="returnData"></page-commodity-grouping1>
             <Intro v-else></Intro>
         </div>
         <!-- </div> -->
@@ -24,6 +27,7 @@
 import PageNotice from "../components/edit/PageNotice.vue";
 import PageNavigation from "../components/edit/PageNavigation.vue";
 import PageDingleCommodities from "../components/edit/PageDingleCommodities.vue";
+import PageCommodityGrouping1 from "../components/edit/PageCommodityGrouping1"
 import Intro from "../components/Intro.vue";
 export default {
   components: {
@@ -31,6 +35,7 @@ export default {
     "page-notice": PageNotice,
     "page-navigation": PageNavigation,
     "page-dingle-commodities": PageDingleCommodities,
+    "page-commodity-grouping1":PageCommodityGrouping1
   },
   computed: {
     selectAssemblyFun() {

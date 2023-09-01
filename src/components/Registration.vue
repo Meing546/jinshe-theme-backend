@@ -3,11 +3,12 @@
     <div>
         <div class="mask"></div>
         <div class="">
-            <div class="login_box ">
+            <div class="login_box modal-active ">
                 <div class="flex borderBottom">
                     <div class="pl20 W90 fs16">{{title}}</div>
                     <div>
                         <i class="iconfont fs25 relative"
+                           @click="close()"
                            style="top:-10px">&#xe85c;</i>
                     </div>
                 </div>
@@ -67,7 +68,10 @@ export default {
   },
   mounted() {},
   methods: {
-    handleClose() {},
+    close() {
+      console.info("关闭-=-=");
+      this.$emit("close");
+    },
   },
 };
 </script>
@@ -83,7 +87,7 @@ export default {
   z-index: 1050;
 }
 .login_box {
-  // animation: sway 1s linear infinite;
+  animation: sway 1s linear infinite;
   // @keyframes sway {
   //   0% {
   //     transform: translateY(0);
@@ -92,16 +96,14 @@ export default {
   //     transform: translate(100px);
   //   }
   // }
-
   min-width: 560px;
-
   // width: 560px;
   transform-origin: 896.222px 79.6389px 0px;
   // padding: 24px 0px !important;
   padding-top: 24px;
   background-color: #fff;
   border-radius: 0;
-  position: relative;
+  position: absolute;
   display: inline-block;
   vertical-align: middle;
   text-align: initial;
@@ -109,6 +111,7 @@ export default {
   white-space: normal;
   max-width: 91% !important;
   z-index: 1051;
+
   .borderBottom {
     border-bottom: 1px solid #dcdee0;
     padding-bottom: 10px;

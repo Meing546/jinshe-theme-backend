@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 4211906 */
-  src: url('iconfont.woff2?t=1693205942338') format('woff2'),
-       url('iconfont.woff?t=1693205942338') format('woff'),
-       url('iconfont.ttf?t=1693205942338') format('truetype');
+  src: url('iconfont.woff2?t=1693474524183') format('woff2'),
+       url('iconfont.woff?t=1693474524183') format('woff'),
+       url('iconfont.ttf?t=1693474524183') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,42 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-shoucang_shixin:before {
+  content: "\eca6";
+}
+
+.icon-cuowuguanbiquxiao-yuankuang:before {
+  content: "\e8e7";
+}
+
+.icon-icon7ai:before {
+  content: "\e60d";
+}
+
+.icon-twitter:before {
+  content: "\e613";
+}
+
+.icon-line:before {
+  content: "\e602";
+}
+
+.icon-whatsapp:before {
+  content: "\ea07";
+}
+
+.icon-weixin:before {
+  content: "\e607";
+}
+
+.icon-icSnsPinterestColor:before {
+  content: "\e6a0";
+}
+
+.icon-Subtract:before {
+  content: "\e755";
 }
 
 .icon-jianhao:before {

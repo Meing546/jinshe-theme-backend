@@ -6,6 +6,69 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "6776388",
+      "name": "收藏_实心",
+      "font_class": "shoucang_shixin",
+      "unicode": "eca6",
+      "unicode_decimal": 60582
+    },
+    {
+      "icon_id": "1727521",
+      "name": "304错误、关闭、取消-圆框",
+      "font_class": "cuowuguanbiquxiao-yuankuang",
+      "unicode": "e8e7",
+      "unicode_decimal": 59623
+    },
+    {
+      "icon_id": "786426",
+      "name": "icon7.ai",
+      "font_class": "icon7ai",
+      "unicode": "e60d",
+      "unicode_decimal": 58893
+    },
+    {
+      "icon_id": "3367929",
+      "name": "twitter",
+      "font_class": "twitter",
+      "unicode": "e613",
+      "unicode_decimal": 58899
+    },
+    {
+      "icon_id": "3507171",
+      "name": "line",
+      "font_class": "line",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    },
+    {
+      "icon_id": "11983524",
+      "name": "whatsapp",
+      "font_class": "whatsapp",
+      "unicode": "ea07",
+      "unicode_decimal": 59911
+    },
+    {
+      "icon_id": "15933094",
+      "name": "微信",
+      "font_class": "weixin",
+      "unicode": "e607",
+      "unicode_decimal": 58887
+    },
+    {
+      "icon_id": "27736711",
+      "name": "icSnsPinterestColor",
+      "font_class": "icSnsPinterestColor",
+      "unicode": "e6a0",
+      "unicode_decimal": 59040
+    },
+    {
+      "icon_id": "28503001",
+      "name": "Subtract",
+      "font_class": "Subtract",
+      "unicode": "e755",
+      "unicode_decimal": 59221
+    },
+    {
       "icon_id": "5387532",
       "name": "减号",
       "font_class": "jianhao",
